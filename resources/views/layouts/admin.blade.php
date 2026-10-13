@@ -28,6 +28,19 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+    {{-- Trix WYSIWYG (admin content fields only): single CDN load, no build step. --}}
+    <link rel="stylesheet" href="https://unpkg.com/trix@2.1.1/dist/trix.css">
+    <script src="https://unpkg.com/trix@2.1.1/dist/trix.umd.min.js"></script>
+    <script>
+        // Reject file attachments (no upload handler on the backend).
+        document.addEventListener('trix-file-accept', (e) => e.preventDefault());
+    </script>
+    <style>
+        trix-editor.form-input { height: auto; min-height: 14rem; padding: 0.75rem 1rem; }
+        trix-editor.form-input h1 { font-size: 1.25rem; font-weight: 600; }
+        trix-toolbar .trix-button--icon-attach { display: none; }
+    </style>
+
     <style>[x-cloak]{display:none!important}</style>
 
     {{-- Global Alpine stores: sidebar + theme (Alpine itself is bundled via app.js) --}}

@@ -111,18 +111,16 @@
                     @enderror
                 </div>
 
-                <x-common.form.textarea
+                <x-common.form.richtext
                     label="Vision"
                     name="vision"
-                    rows="3"
                     placeholder="To become a trusted digital partner for growing brands worldwide."
                     :value="$companyProfile?->vision"
                 />
 
-                <x-common.form.textarea
+                <x-common.form.richtext
                     label="Mission"
                     name="mission"
-                    rows="3"
                     placeholder="To design and build digital products that solve real problems and deliver lasting value."
                     :value="$companyProfile?->mission"
                 />

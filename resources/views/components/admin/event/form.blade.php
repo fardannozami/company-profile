@@ -34,10 +34,9 @@
     />
 
     {{-- CONTENT --}}
-    <x-common.form.textarea
+    <x-common.form.richtext
         label="Content"
         name="content"
-        rows="6"
         :value="old('content', $event->content ?? '')"
         required
     />

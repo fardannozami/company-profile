@@ -27,10 +27,9 @@
             :value="$article?->excerpt"
         />
 
-        <x-common.form.textarea
+        <x-common.form.richtext
             label="Content"
             name="content"
-            rows="8"
             :value="$article?->content"
             required
         />

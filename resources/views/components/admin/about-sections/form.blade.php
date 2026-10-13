@@ -16,7 +16,7 @@
         <x-common.form.input label="Title" name="title" :value="$aboutSection?->title" required />
 
         <div>
-            <x-common.form.textarea label="Body" name="body" rows="12" :value="$aboutSection?->body" required />
+            <x-common.form.richtext label="Body" name="body" :value="$aboutSection?->body" required />
             <p class="mt-1.5 text-xs text-app-muted">
                 Konten tampil sebagai seksi di halaman About (HTML didukung).
             </p>

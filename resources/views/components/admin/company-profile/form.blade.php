@@ -46,10 +46,9 @@
             <legend>Profil</legend>
 
             <div>
-                <x-common.form.textarea
+                <x-common.form.richtext
                     label="About Company"
                     name="about"
-                    rows="5"
                     :value="$companyProfile?->about"
                 />
                 <p class="mt-1.5 text-xs text-app-muted">
@@ -64,7 +63,7 @@
 
             <div class="grid grid-cols-1 gap-5">
                 <div>
-                    <x-common.form.textarea
+                    <x-common.form.richtext
                         label="Vision"
                         name="vision"
                         :value="$companyProfile?->vision"
@@ -75,7 +74,7 @@
                 </div>
 
                 <div>
-                    <x-common.form.textarea
+                    <x-common.form.richtext
                         label="Mission"
                         name="mission"
                         :value="$companyProfile?->mission"

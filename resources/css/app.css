@@ -1,0 +1,608 @@
+/* ===================================================================
+| FILE    : resources/css/app.css
+| PROJECT : Company Profile + Admin Panel (Laravel)
+| PURPOSE :
+| - Centralized design system and UI foundation
+| - Tailwind CSS v4 (CSS-first configuration)
+| - Prevents hardcoded styles in Blade templates
+| - Supports future Dark / Light mode theming
+|
+| ARCHITECTURE NOTES:
+| - All visual tokens (colors, fonts, spacing) live here
+| - Blade files must consume tokens via utility classes
+| - This file is the single source of truth for UI styling
+=================================================================== */
+
+
+/* -------------------------------------------------------------------
+| TAILWIND CORE
+| -------------------------------------------------------------------
+| Loads Tailwind CSS runtime.
+| All utilities, layers, and theme tokens depend on this import.
+------------------------------------------------------------------- */
+@import 'tailwindcss';
+
+
+/* -------------------------------------------------------------------
+| SOURCE PATHS (Tailwind v4 – CSS First)
+| -------------------------------------------------------------------
+| Defines files Tailwind should scan for class usage.
+| This replaces tailwind.config.js content scanning.
+------------------------------------------------------------------- */
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+/* Class-based dark mode: toggled by adding `.dark` on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* ===================================================================
+| THEME TOKENS (DESIGN SYSTEM)
+| -------------------------------------------------------------------
+| RULES:
+| - All colors, fonts, and UI constants must be defined here
+| - Never hardcode colors in Blade or components
+| - Any new visual value must become a token first
+|
+| BENEFITS:
+| - Consistent UI
+| - Easy theme switching
+| - Scalable and maintainable styling
+=================================================================== */
+@theme {
+
+    /* ===============================================================
+    | TYPOGRAPHY
+    | ---------------------------------------------------------------
+    | Base font family used across the entire application
+    ============================================================== */
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+
+    /* ===============================================================
+    | BASE BACKGROUND
+    | ---------------------------------------------------------------
+    | Default background colors for different application scopes
+    ============================================================== */
+    --color-bg-client: #111827;     /* Public-facing pages */
+    --color-bg-admin:  #020617;     /* Admin panel */
+
+
+    /* ===============================================================
+    | TEXT COLORS
+    | ---------------------------------------------------------------
+    | Standardized text hierarchy
+    ============================================================== */
+    --color-text-main:    #e5e7eb;
+    --color-text-muted:  #94a3b8;
+    --color-text-inverse:#020617;
+
+    /* ---------------------------------------------------------------
+    | PUBLIC SITE — semantic tokens (LIGHT is the default theme).
+    | These flip under `.dark` and are pinned dark under `.admin-scope`
+    | (see overrides below the @theme block).
+    ------------------------------------------------------------------ */
+    --color-app-bg:        #f7f8fb;             /* page background       */
+    --color-app-surface:   #ffffff;             /* cards / panels        */
+    --color-app-surface-2: #eef1f6;             /* raised / hover state  */
+    --color-app-heading:   #0f172a;             /* headings (near-black) */
+    --color-app-text:      #334155;             /* body text             */
+    --color-app-muted:     #64748b;             /* secondary text        */
+    --color-app-border:    rgba(15,23,42,0.08); /* hairline border       */
+    --color-grid-line:     rgba(15,23,42,0.05); /* decorative grid       */
+
+
+    /* ===============================================================
+    | BRAND COLORS
+    | ---------------------------------------------------------------
+    | Primary brand identity colors
+    ============================================================== */
+    --color-brand-main:  #4f46e5;     /* Primary action */
+    --color-brand-hover: #4338ca;     /* Hover state */
+    --color-brand-accent:#4f46e5;     /* Accent (light default; lightens in dark) */
+    --color-brand-soft:  rgba(79,70,229,0.15);
+    --color-brand-text:  #ffffff;
+
+
+    /* ===============================================================
+    | CARD / SURFACE
+    | ---------------------------------------------------------------
+    | Card containers and elevated surfaces
+    ============================================================== */
+    --color-card-bg:           #0b1220;
+    --color-card-border:       rgba(255,255,255,0.08);
+    --color-card-light-bg:     #ffffff;
+    --color-card-light-border: rgba(0,0,0,0.08);
+
+
+    /* ===============================================================
+    | FORM INPUT
+    | ---------------------------------------------------------------
+    | Input styles for both light and dark contexts
+    ============================================================== */
+    --color-input-bg:           #ffffff;
+    --color-input-border:       #d1d5db;
+    --color-input-placeholder:  #9ca3af;
+    --color-input-focus:        #4f46e5;
+
+    --color-input-dark-bg:           #020617;
+    --color-input-dark-border:       rgba(255,255,255,0.16);
+    --color-input-dark-placeholder:  rgba(255,255,255,0.45);
+
+
+    /* ===============================================================
+    | BORDERS
+    ============================================================== */
+    --color-border-soft:   rgba(255,255,255,0.08);
+    --color-border-strong: rgba(255,255,255,0.16);
+
+
+    /* ===============================================================
+    | STATE COLORS
+    | ---------------------------------------------------------------
+    | Feedback & status indicators
+    ============================================================== */
+    --color-success:        #22c55e;
+    --color-danger:         #ef4444;
+    --color-danger-hover:   #dc2626;
+}
+
+
+/* ===================================================================
+| BASE STYLES
+| -------------------------------------------------------------------
+| Global HTML and body defaults
+=================================================================== */
+@layer base {
+
+    html { color-scheme: light; }
+    html.dark { color-scheme: dark; }
+
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--color-app-bg);
+        color: var(--color-app-text);
+    }
+
+    /* Brand-colored native form controls */
+    input[type="radio"],
+    input[type="checkbox"] {
+        accent-color: var(--color-brand-main);
+    }
+
+    /* Text selection styling */
+    ::selection {
+        background-color: var(--color-brand-soft);
+    }
+}
+
+
+/* ===================================================================
+| THEME OVERRIDES (unlayered so they reliably win over @theme :root)
+| -------------------------------------------------------------------
+| - .dark        > public site dark theme (toggled on <html>)
+| - .admin-scope > admin panel, always dark regardless of the toggle
+=================================================================== */
+.dark {
+    --color-app-bg:        #0a0e1a;
+    --color-app-surface:   #111827;
+    --color-app-surface-2: #1b2436;
+    --color-app-heading:   #f8fafc;
+    --color-app-text:      #cbd5e1;
+    --color-app-muted:     #94a3b8;
+    --color-app-border:    rgba(255,255,255,0.09);
+    --color-grid-line:     rgba(255,255,255,0.04);
+    --color-brand-accent:  #818cf8;
+}
+
+/* Admin panel — LIGHT by default, flips to dark when <html> has .dark.
+   Scoped to .admin-scope so the public-site tokens are never affected. */
+.admin-scope {
+    --color-app-bg:        #f4f5f8;
+    --color-app-surface:   #ffffff;
+    --color-app-surface-2: #eef1f6;
+    --color-app-heading:   #0f172a;
+    --color-app-text:      #334155;
+    --color-app-muted:     #64748b;
+    --color-app-border:    rgba(15,23,42,0.08);
+    --color-grid-line:     rgba(15,23,42,0.05);
+    --color-brand-accent:  #4f46e5;
+    /* legacy aliases used by admin component classes */
+    --color-text-main:     #1f2937;
+    --color-text-muted:    #64748b;
+    --color-border-soft:   rgba(15,23,42,0.08);
+    --color-border-strong: rgba(15,23,42,0.16);
+    --color-bg-admin:      #f4f5f8;
+    --color-card-bg:       #ffffff;
+}
+
+.dark .admin-scope {
+    --color-app-bg:        #0a0e1a;
+    --color-app-surface:   #0f1729;
+    --color-app-surface-2: #1b2436;
+    --color-app-heading:   #f8fafc;
+    --color-app-text:      #cbd5e1;
+    --color-app-muted:     #94a3b8;
+    --color-app-border:    rgba(255,255,255,0.09);
+    --color-grid-line:     rgba(255,255,255,0.04);
+    --color-brand-accent:  #818cf8;
+    --color-text-main:     #e5e7eb;
+    --color-text-muted:    #94a3b8;
+    --color-border-soft:   rgba(255,255,255,0.08);
+    --color-border-strong: rgba(255,255,255,0.16);
+    --color-bg-admin:      #0a0e1a;
+    --color-card-bg:       #0b1220;
+}
+
+
+/* ===================================================================
+| COMPONENTS
+| -------------------------------------------------------------------
+| Reusable UI building blocks
+=================================================================== */
+@layer components {
+
+    /* ===============================================================
+    | CARD (GLOBAL)
+    | ---------------------------------------------------------------
+    | Base card component used across client & admin UI
+    ============================================================== */
+    .card {
+        @apply rounded-2xl;
+        background-color: var(--color-card-bg);
+        border: 1px solid var(--color-card-border);
+    }
+
+    .card-header {
+        @apply px-6 py-5;
+    }
+
+    .card-title {
+        @apply text-base font-medium;
+        color: var(--color-text-main);
+    }
+
+    .card-desc {
+        @apply mt-1 text-sm;
+        color: var(--color-text-muted);
+    }
+
+    .card-body {
+        @apply p-4 sm:p-6;
+    }
+
+    .card-body--with-header {
+        border-top: 1px solid var(--color-border-soft);
+    }
+
+
+    /* ===============================================================
+    | BUTTONS
+    | ---------------------------------------------------------------
+    | Shared button styles
+    ============================================================== */
+    /* Shared shape for every button variant */
+    .btn-primary,
+    .btn-outline,
+    .btn-ghost,
+    .btn-admin,
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2
+               rounded-lg px-5 py-2.5
+               text-sm font-semibold whitespace-nowrap
+               transition-colors duration-200;
+    }
+
+    .btn-primary:focus-visible,
+    .btn-outline:focus-visible,
+    .btn-ghost:focus-visible,
+    .btn-admin:focus-visible,
+    .btn-danger:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(79,70,229,0.45);
+    }
+
+    /* Primary — main call to action */
+    .btn-primary {
+        background-color: var(--color-brand-main);
+        color: var(--color-brand-text);
+    }
+    .btn-primary:hover { background-color: var(--color-brand-hover); }
+
+    /* Outline — secondary action (theme-aware) */
+    .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--color-app-border);
+        color: var(--color-app-heading);
+    }
+    .btn-outline:hover {
+        background-color: color-mix(in srgb, var(--color-app-text) 8%, transparent);
+        border-color: color-mix(in srgb, var(--color-app-text) 24%, transparent);
+    }
+
+    /* Ghost — low-emphasis / tertiary, same accent blue as inline "view more" links */
+    .btn-ghost {
+        background-color: transparent;
+        color: var(--color-brand-accent);
+    }
+    .btn-ghost:hover {
+        background-color: var(--color-brand-soft);
+        color: var(--color-brand-accent);
+    }
+
+    /* Admin — neutral subtle button used inside the panel */
+    .btn-admin {
+        @apply font-medium;
+        background-color: var(--color-app-surface-2);
+        border: 1px solid var(--color-app-border);
+        color: var(--color-app-text);
+    }
+    .btn-admin:hover { background-color: color-mix(in srgb, var(--color-app-text) 10%, var(--color-app-surface-2)); }
+
+    /* Danger — destructive action */
+    .btn-danger {
+        background-color: var(--color-danger);
+        color: #ffffff;
+    }
+    .btn-danger:hover { background-color: var(--color-danger-hover); }
+
+    /* Size modifiers */
+    .btn-sm { @apply px-3.5 py-2 text-xs; }
+    .btn-lg { @apply h-12 px-7; }
+
+    /* Square icon-only button (no text padding, so the icon isn't squeezed) */
+    .btn-icon {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-lg transition-colors;
+        background-color: var(--color-app-surface-2);
+        border: 1px solid var(--color-app-border);
+        color: var(--color-app-text);
+    }
+    .btn-icon:hover {
+        color: var(--color-app-heading);
+        background-color: color-mix(in srgb, var(--color-app-text) 8%, var(--color-app-surface-2));
+    }
+
+
+    /* ===============================================================
+    | SECTION HEADINGS (PUBLIC SITE)
+    | ---------------------------------------------------------------
+    | Reusable building blocks for section headers so the
+    | eyebrow + title + subtitle pattern stays consistent.
+    ============================================================== */
+    .eyebrow {
+        @apply mb-3 inline-block text-xs font-semibold uppercase tracking-widest;
+        color: var(--color-brand-accent);
+    }
+
+    .section-title {
+        @apply text-3xl font-semibold tracking-tight md:text-4xl;
+        color: var(--color-app-heading);
+    }
+
+    .section-subtitle {
+        @apply mt-4 text-sm leading-relaxed;
+        color: var(--color-app-muted);
+    }
+
+
+    /* ===============================================================
+    | DECOR (PUBLIC SITE)
+    | ---------------------------------------------------------------
+    | Subtle, reusable background textures. Used sparingly so the
+    | site feels designed rather than "effect-stacked".
+    ============================================================== */
+
+    /* Faint blueprint grid */
+    .bg-grid {
+        background-image:
+            linear-gradient(to right, var(--color-grid-line) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--color-grid-line) 1px, transparent 1px);
+        background-size: 56px 56px;
+    }
+
+    /* Soft brand glow, anchored to the top */
+    .glow-top::before {
+        content: "";
+        position: absolute;
+        inset: -20% 0 auto 0;
+        height: 60%;
+        background: radial-gradient(60% 60% at 50% 0%, rgba(79,70,229,0.22), transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Fade a section's bottom edge into the page background */
+    .fade-bottom::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 30%;
+        background: linear-gradient(to bottom, transparent, var(--color-app-bg));
+        pointer-events: none;
+    }
+
+    /* Hairline card surface used across the public site */
+    .surface {
+        background-color: var(--color-app-surface);
+        border: 1px solid var(--color-app-border);
+    }
+    .surface-hover {
+        transition: border-color .3s, box-shadow .3s, transform .3s;
+    }
+    .surface-hover:hover {
+        border-color: color-mix(in srgb, var(--color-app-text) 22%, transparent);
+        box-shadow: 0 12px 32px -16px rgba(15,23,42,0.25);
+    }
+
+    /* Translucent bar used by the public header & footer */
+    .site-header {
+        background-color: color-mix(in srgb, var(--color-app-bg) 82%, transparent);
+        border-color: var(--color-app-border);
+        backdrop-filter: blur(12px);
+    }
+
+
+    /* ===============================================================
+    | FORM INPUT
+    | ---------------------------------------------------------------
+    | Standard text input styling
+    ============================================================== */
+    /* Text input / textarea — theme-aware on both the public site and admin. */
+    .form-input {
+        @apply h-11 w-full rounded-lg px-4 text-sm transition;
+        background-color: var(--color-app-surface);
+        border: 1px solid var(--color-app-border);
+        color: var(--color-app-heading);
+    }
+
+    textarea.form-input {
+        @apply h-auto py-3;
+    }
+
+    .form-input::placeholder {
+        color: var(--color-app-muted);
+    }
+
+    .form-input:focus {
+        outline: none;
+        border-color: var(--color-brand-main);
+        box-shadow: 0 0 0 3px var(--color-brand-soft);
+    }
+
+
+    /* ===============================================================
+    | ADMIN SCOPE
+    | ---------------------------------------------------------------
+    | Overrides applied only inside admin area
+    ============================================================== */
+    .admin-scope {
+        background-color: var(--color-bg-admin);
+        color: var(--color-text-main);
+    }
+
+    /* Hide scrollbar in admin UI */
+    .admin-scope ::-webkit-scrollbar {
+        width: 0;
+    }
+
+    .admin-card {
+        @apply rounded-2xl shadow-xl;
+        background-color: var(--color-app-surface);
+        border: 1px solid var(--color-app-border);
+    }
+
+
+    /* ===============================================================
+    | TABLE (ADMIN)
+    | ---------------------------------------------------------------
+    | Data table styling for admin lists
+    ============================================================== */
+    .admin-table {
+        @apply w-full text-sm border-collapse;
+    }
+
+    .admin-table thead th {
+        @apply px-4 py-3 text-left font-medium;
+        color: var(--color-text-muted);
+        border-bottom: 1px solid var(--color-border-soft);
+    }
+
+    .admin-table tbody td {
+        @apply px-4 py-3 align-top;
+        color: var(--color-text-main);
+        border-bottom: 1px solid var(--color-border-soft);
+    }
+
+    .admin-table-empty {
+        @apply px-4 py-6 text-center text-sm;
+        color: var(--color-text-muted);
+    }
+
+
+    /* ===============================================================
+    | BADGE
+    | ---------------------------------------------------------------
+    | Small status indicators
+    ============================================================== */
+    .badge {
+        @apply inline-flex items-center rounded-md
+               px-2 py-1 text-xs font-medium;
+    }
+
+    .badge-success {
+        background-color: rgba(34,197,94,0.15);
+        color: var(--color-success);
+    }
+
+    .badge-muted {
+        background-color: rgba(148,163,184,0.15);
+        color: var(--color-text-muted);
+    }
+
+
+    /* ===============================================================
+    | ADMIN TEXTAREA
+    | ---------------------------------------------------------------
+    | Special textarea optimized for message/content input
+    ============================================================== */
+    .admin-textarea {
+        @apply w-full rounded-lg text-sm resize-y transition;
+        background-color: var(--color-app-surface);
+        border: 1px solid var(--color-app-border);
+        color: var(--color-app-heading);
+
+        /* Text positioning */
+        padding-top: 1.4rem;
+        padding-bottom: 1.25rem;
+        padding-left: 1rem;
+        padding-right: 3rem;
+
+        line-height: 1.7;
+        min-height: 110px;
+    }
+
+    .admin-textarea::placeholder {
+        color: var(--color-app-muted);
+    }
+
+    .admin-textarea:focus {
+        outline: none;
+        border-color: var(--color-brand-main);
+        box-shadow: 0 0 0 3px rgba(79,70,229,0.25);
+    }
+
+
+    /* Clear (X) button inside textarea */
+    .admin-clear-btn {
+        @apply absolute right-3 top-1/2 -translate-y-1/2
+               text-app-muted hover:text-app-text
+               transition cursor-pointer;
+    }
+
+    /* Hides the scrollbar on horizontal snap-scroll carousels (mobile galleries etc.)
+       while keeping the element scrollable by touch/drag. */
+    .no-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+/* ===================================================================
+| KEYFRAMES
+| -------------------------------------------------------------------
+| Animations used by specific components
+=================================================================== */
+@keyframes gallery-scroll {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}

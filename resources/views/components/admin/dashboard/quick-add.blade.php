@@ -1,7 +1,7 @@
 {{-- Dashboard button that opens a modal with the create form for the given resource $type. --}}
 @props([
     'type',
-    'label' => 'Add',
+    'label' => 'Tambah',
 ])
 
 <div x-data="{ open: false }">
@@ -10,13 +10,13 @@
     <button
         type="button"
         @click="open = true"
-        class="inline-flex items-center gap-2
-               rounded-lg border border-app-border
+        class="inline-flex items-center gap-1.5
+               rounded-full border border-app-border
                bg-app-surface-2 px-4 py-2
-               text-sm text-app-text
-               hover:bg-app-surface-2 transition"
+               text-xs font-semibold text-app-text
+               transition hover:border-[#c6a15b] hover:text-app-heading"
     >
-        + {{ $label }}
+        <span class="text-[#a5813d]">+</span> {{ $label }}
     </button>
 
     {{-- MODAL --}}
@@ -28,14 +28,14 @@
         >
             {{-- BACKDROP --}}
             <div
-                class="absolute inset-0 bg-black/80"
+                class="absolute inset-0 bg-[#141834]/80"
                 @click="open = false"
             ></div>
 
             {{-- MODAL BOX --}}
             <div class="surface relative w-full max-w-2xl rounded-2xl shadow-2xl">
                 <div class="flex items-center justify-between border-b border-app-border px-6 py-4">
-                    <h3 class="text-sm font-semibold text-app-heading">Add {{ $label }}</h3>
+                    <h3 class="font-display text-lg font-medium text-app-heading">Tambah {{ $label }}</h3>
                     <button type="button" @click="open = false" class="text-app-muted transition hover:text-app-heading">&times;</button>
                 </div>
 

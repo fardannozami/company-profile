@@ -1,4 +1,4 @@
-{{-- Landing section: homepage hero banner with headline, CTAs, and a trusted-by logo strip. --}}
+{{-- Landing section: homepage hero — editorial serif, bingkai lengkung emas, motif bintang halus. --}}
 @php
     // Use the newest gallery image as the hero visual, falling back to the static asset.
     $heroImage = optional($galleries->first())->image;
@@ -10,75 +10,92 @@
 
 <section class="relative isolate overflow-hidden bg-app-bg glow-top">
 
-    {{-- Faint blueprint grid, masked so it fades toward the edges --}}
-    <div class="absolute inset-0 -z-10 bg-grid [mask-image:radial-gradient(ellipse_at_top,black,transparent_72%)]"></div>
+    {{-- Motif bintang delapan yang sangat halus + grid --}}
+    <div class="absolute inset-0 -z-10 pattern-star opacity-60 [mask-image:radial-gradient(ellipse_at_top,black,transparent_75%)]"></div>
 
-    {{-- min-h locks the hero to the viewport (minus the 4rem navbar) so it fills
-         a laptop screen exactly and never leaves a dead gap on larger monitors --}}
-    <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pt-24 pb-16
-                lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-10">
+    <div class="relative mx-auto grid max-w-7xl items-center gap-12 px-6 pt-20 pb-16
+                lg:min-h-[calc(100vh-4rem)] lg:grid-cols-[1.08fr_0.92fr] lg:gap-14 lg:py-10">
 
         {{-- ============ LEFT: copy ============ --}}
         <div>
             <a href="{{ route('events') }}" x-data x-reveal
-               class="group surface inline-flex items-center gap-2 rounded-full
-                      px-3 py-1 text-xs text-app-muted backdrop-blur transition hover:border-app-text/25">
-                <span class="rounded-full bg-brand-main px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">New</span>
-                {{ $companyProfile->hero_badge ?? 'See what we\'re building' }}
-                <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" fill="none"
+               class="group inline-flex items-center gap-2.5 rounded-full border border-app-border
+                      bg-app-surface/80 py-1 pl-1 pr-4 text-xs text-app-muted backdrop-blur transition hover:border-[#c6a15b]/70">
+                <span class="rounded-full bg-[#141834] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#c6a15b]">Baru</span>
+                {{ $companyProfile->hero_badge ?? 'Lihat kegiatan terbaru kami' }}
+                <svg class="h-3.5 w-3.5 text-[#a5813d] transition-transform group-hover:translate-x-0.5" fill="none"
                      stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                 </svg>
             </a>
 
             <h1 x-data x-reveal="{ delay: 80 }"
-                class="mt-6 text-4xl font-semibold leading-[1.05] tracking-tight text-app-heading sm:text-5xl lg:text-[3.5rem]">
-                {{ $companyProfile->hero_title ?? 'We craft digital products that' }}
-                <span class="text-brand-accent">{{ $companyProfile->hero_title_highlight ?? 'move brands forward' }}</span>
+                class="mt-6 font-display text-[2.6rem] font-medium leading-[1.04] tracking-tight text-app-heading sm:text-6xl lg:text-[4rem]">
+                {{ $companyProfile->hero_title ?? 'Gerakan muda yang' }}
+                <em class="relative whitespace-nowrap text-brand-accent">{{ $companyProfile->hero_title_highlight ?? 'mencerahkan' }}<span aria-hidden="true" class="absolute inset-x-0 -bottom-1 h-[3px] rounded-full bg-gradient-to-r from-[#c6a15b] to-transparent"></span></em>
             </h1>
 
             <p x-data x-reveal="{ delay: 160 }" class="mt-6 max-w-xl text-base leading-relaxed text-app-muted">
                 {{ filled($companyProfile->hero_description) ? $companyProfile->hero_description : \Illuminate\Support\Str::limit(strip_tags($companyProfile->about
-                    ?? 'From idea to launch, we design and build modern, scalable products that help ambitious teams grow.'), 160) }}
+                    ?? 'Pemuda Muhammadiyah DIY: mewadahi kader muda untuk belajar, berkhidmat, dan memberi manfaat bagi umat dan bangsa.'), 170) }}
             </p>
 
             <div x-data x-reveal="{ delay: 240 }" class="mt-8 flex flex-wrap items-center gap-3">
-                <a href="{{ route('contact') }}" class="btn-primary btn-lg">{{ $companyProfile->hero_cta_primary ?? 'Start a project' }}</a>
-                <a href="{{ route('products') }}" class="btn-outline btn-lg">{{ $companyProfile->hero_cta_secondary ?? 'Explore our work' }}</a>
+                <a href="{{ route('contact') }}" class="btn-primary btn-lg">{{ $companyProfile->hero_cta_primary ?? 'Hubungi kami' }}</a>
+                <a href="{{ route('products') }}" class="btn-outline btn-lg">{{ $companyProfile->hero_cta_secondary ?? 'Jelajahi karya' }}</a>
+            </div>
+
+            {{-- Angka ringkas — bukti gerak, bukan pajangan --}}
+            <dl x-data x-reveal="{ delay: 300 }" class="mt-10 flex items-center gap-8 border-t border-app-border pt-6">
+                <div>
+                    <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-app-muted">Galeri</dt>
+                    <dd class="mt-1 font-display text-2xl text-app-heading">{{ number_format($galleries->count()) }}<span class="text-[#a5813d]">+</span></dd>
+                </div>
+                <div class="h-10 w-px bg-app-border"></div>
+                <div>
+                    <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-app-muted">Produk</dt>
+                    <dd class="mt-1 font-display text-2xl text-app-heading">{{ number_format($products->count()) }}<span class="text-[#a5813d]">+</span></dd>
+                </div>
+                <div class="h-10 w-px bg-app-border"></div>
+                <div>
+                    <dt class="text-[11px] font-semibold uppercase tracking-[0.18em] text-app-muted">Mitra</dt>
+                    <dd class="mt-1 font-display text-2xl text-app-heading">{{ number_format($clients->count()) }}<span class="text-[#a5813d]">+</span></dd>
+                </div>
+            </dl>
+        </div>
+
+        {{-- ============ RIGHT: arched visual ============ --}}
+        <div x-data x-reveal="{ delay: 200 }" class="relative mx-auto w-full max-w-md lg:mx-0 lg:justify-self-end">
+            {{-- Offset emas di belakang bingkai --}}
+            <div aria-hidden="true" class="absolute -inset-3 rounded-b-[2rem] rounded-t-[999px] border border-[#c6a15b]/50"></div>
+
+            <figure class="relative overflow-hidden rounded-b-[1.6rem] rounded-t-[999px] border border-app-border bg-ink shadow-2xl">
+                <img src="{{ $heroSrc }}" alt="{{ $companyProfile->company_name ?? 'Kegiatan kami' }}"
+                     class="aspect-[3/4] max-h-[520px] w-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#141834]/70 via-transparent to-transparent"></div>
+                <figcaption class="absolute inset-x-0 bottom-0 p-6 text-center">
+                    <p class="font-display text-lg italic text-white">{{ $companyProfile->company_name ?? 'Pemuda Muhammadiyah DIY' }}</p>
+                    <p class="mt-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#c6a15b]">Muda · Mencerahkan</p>
+                </figcaption>
+            </figure>
+
+            {{-- availability chip --}}
+            <div class="absolute -bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2.5 whitespace-nowrap rounded-full border border-app-border bg-app-surface px-4 py-2.5 shadow-xl">
+                <span class="relative flex h-2.5 w-2.5">
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400/70"></span>
+                    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                </span>
+                <span class="text-xs font-medium text-app-heading">{{ $companyProfile->hero_availability ?? 'Terbuka untuk kolaborasi' }}</span>
             </div>
 
             @if ($trustedLogos->isNotEmpty())
-                <div x-data x-reveal="{ delay: 320 }" class="mt-10">
-                    <p class="text-xs uppercase tracking-widest text-app-muted/70">Trusted by teams at</p>
-                    <div class="mt-5 flex flex-wrap items-center gap-x-9 gap-y-5">
-                        @foreach ($trustedLogos as $client)
-                            <img src="{{ asset('storage/'.$client->logo) }}" alt="{{ $client->name }}"
-                                 class="h-7 w-auto opacity-50 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0">
-                        @endforeach
-                    </div>
+                <div class="mt-10 flex items-center justify-center gap-6">
+                    @foreach ($trustedLogos as $client)
+                        <img src="{{ asset('storage/'.$client->logo) }}" alt="{{ $client->name }}"
+                             class="h-6 w-auto opacity-45 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0">
+                    @endforeach
                 </div>
             @endif
-        </div>
-
-        {{-- ============ RIGHT: framed visual ============ --}}
-        <div x-data x-reveal="{ delay: 200 }" class="relative mx-auto w-full max-w-xl lg:mx-0">
-            {{-- soft brand wash behind the frame --}}
-            <div class="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-tr from-brand-main/25 via-transparent to-transparent blur-2xl"></div>
-
-            <div class="relative max-h-[420px] overflow-hidden rounded-2xl border border-app-border shadow-2xl xl:max-h-[480px]">
-                <img src="{{ $heroSrc }}" alt="{{ $companyProfile->company_name ?? 'Our work' }}"
-                     class="aspect-[4/3] max-h-[420px] w-full object-cover xl:max-h-[480px]">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-            </div>
-
-            {{-- availability chip --}}
-            <div class="surface absolute -bottom-5 -left-5 flex items-center gap-2.5 rounded-xl px-4 py-3 shadow-xl backdrop-blur">
-                <span class="relative flex h-2.5 w-2.5">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400/70"></span>
-                    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400"></span>
-                </span>
-                <span class="text-sm font-medium text-app-heading">{{ $companyProfile->hero_availability ?? 'Available for new projects' }}</span>
-            </div>
         </div>
     </div>
 </section>

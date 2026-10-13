@@ -3,6 +3,9 @@
     x-data="{ mobileOpen: false, userOpen: false }"
     class="sticky top-0 z-50 site-header border-b"
 >
+    {{-- Garis emas tipis — penanda visual situs --}}
+    <div aria-hidden="true" class="h-[2px] bg-gradient-to-r from-transparent via-[#c6a15b] to-transparent"></div>
+
     <div class="mx-auto max-w-7xl px-6">
         <div class="flex h-16 items-center justify-between">
 
@@ -11,27 +14,36 @@
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
                     @if (!empty($companyProfile->logo))
                         <img src="{{ asset('storage/' . $companyProfile->logo) }}"
-                             alt="{{ $companyProfile->company_name }}" class="h-8 w-auto object-contain">
+                             alt="{{ $companyProfile->company_name }}" class="h-9 w-9 rounded-full object-cover ring-1 ring-[#c6a15b]/50">
+                    @else
+                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#141834] font-display text-sm italic text-[#c6a15b]">
+                            {{ Str::substr($companyProfile->company_name ?? 'P', 0, 1) }}
+                        </span>
                     @endif
-                    <span class="truncate text-lg font-semibold text-app-heading">
-                        {{ $companyProfile->company_name ?? 'Company' }}
+                    <span class="leading-tight">
+                        <span class="block truncate font-display text-[1.05rem] font-medium text-app-heading">
+                            {{ $companyProfile->company_name ?? 'Company' }}
+                        </span>
+                        <span class="block text-[10px] font-semibold uppercase tracking-[0.24em] text-[#a5813d]">
+                            Daerah Istimewa Yogyakarta
+                        </span>
                     </span>
                 </a>
 
-                <nav class="hidden items-center gap-8 text-sm md:flex">
+                <nav class="hidden items-center gap-7 text-sm md:flex">
                     @php
-                        $base = 'relative text-app-muted transition hover:text-app-heading';
-                        $after = 'after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0
-                                  after:bg-brand-accent after:transition-all after:duration-300';
+                        $base = 'relative py-1 text-app-muted transition hover:text-app-heading';
+                        $after = 'after:absolute after:left-0 after:-bottom-0.5 after:h-px after:w-0
+                                  after:bg-[#c6a15b] after:transition-all after:duration-300';
                         $active = 'text-app-heading after:w-full';
                         $links = [
-                            'home' => ['Home', 'home'],
-                            'about' => ['About', 'about'],
-                            'articles' => ['Articles', 'articles*'],
-                            'products' => ['Products', 'products*'],
-                            'events' => ['Events', 'events*'],
-                            'gallery' => ['Gallery', 'gallery*'],
-                            'contact' => ['Contact', 'contact'],
+                            'home' => ['Beranda', 'home'],
+                            'about' => ['Tentang', 'about'],
+                            'articles' => ['Artikel', 'articles*'],
+                            'products' => ['Produk', 'products*'],
+                            'events' => ['Kegiatan', 'events*'],
+                            'gallery' => ['Galeri', 'gallery*'],
+                            'contact' => ['Kontak', 'contact'],
                         ];
                     @endphp
                     @foreach ($links as $route => [$label, $pattern])
@@ -50,8 +62,8 @@
                 <button
                     x-data="{ dark: document.documentElement.classList.contains('dark') }"
                     @click="dark = !dark; document.documentElement.classList.toggle('dark', dark); localStorage.setItem('theme', dark ? 'dark' : 'light')"
-                    class="rounded-lg border border-app-border p-2 text-app-muted transition hover:text-app-heading"
-                    aria-label="Toggle theme"
+                    class="rounded-full border border-app-border p-2 text-app-muted transition hover:border-[#c6a15b] hover:text-app-heading"
+                    aria-label="Ganti tema"
                 >
                     {{-- sun (shown in light) --}}
                     <svg x-show="!dark" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
@@ -66,7 +78,7 @@
 
                 {{-- MOBILE HAMBURGER --}}
                 <button @click="mobileOpen = !mobileOpen"
-                        class="rounded-lg border border-app-border p-2 text-app-muted transition hover:text-app-heading md:hidden">
+                        class="rounded-full border border-app-border p-2 text-app-muted transition hover:text-app-heading md:hidden">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
@@ -76,20 +88,20 @@
                 <div class="hidden items-center gap-2 md:flex">
                     @auth
                         @if(auth()->user()->isAdmin())
-                            <a href="{{ route('admin.dashboard') }}" class="btn-primary btn-sm">Dashboard</a>
+                            <a href="{{ route('admin.dashboard') }}" class="btn-primary btn-sm">Dasbor</a>
                         @else
                             <a href="{{ route('cart.index') }}"
-                               class="flex items-center gap-2 rounded-lg border border-app-border px-3 py-2 text-sm
-                                      text-app-muted transition hover:text-app-heading">
+                               class="flex items-center gap-2 rounded-full border border-app-border px-4 py-2 text-sm
+                                      text-app-muted transition hover:border-[#c6a15b] hover:text-app-heading">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.6 3M7 13h10l4-8H5.6M7 13L5.8 18a1 1 0 001 1h10a1 1 0 001-1l-1.2-5M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
                                 </svg>
-                                <span class="hidden sm:inline">Cart</span>
+                                <span class="hidden sm:inline">Keranjang</span>
                             </a>
 
                             <div class="relative" @click.outside="userOpen = false">
                                 <button @click="userOpen = !userOpen"
-                                        class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-app-text transition hover:text-app-heading">
+                                        class="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-app-text transition hover:text-app-heading">
                                     <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 21a8 8 0 0116 0"/>
@@ -101,19 +113,19 @@
                                 </button>
 
                                 <div x-show="userOpen" x-transition x-cloak
-                                     class="surface absolute right-0 mt-3 w-52 overflow-hidden rounded-xl shadow-xl">
-                                    <a href="{{ route('orders.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Orders</a>
-                                    <a href="{{ route('user.messages.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Messages</a>
-                                    <a href="{{ route('profile.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Profile</a>
+                                     class="surface absolute right-0 mt-3 w-52 overflow-hidden rounded-2xl shadow-xl">
+                                    <a href="{{ route('orders.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Pesanan</a>
+                                    <a href="{{ route('user.messages.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Pesan</a>
+                                    <a href="{{ route('profile.index') }}" class="block px-4 py-3 text-sm text-app-text hover:bg-app-surface-2 hover:text-app-heading">Profil</a>
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
-                                        <button type="submit" class="w-full px-4 py-3 text-left text-sm text-danger hover:bg-danger/10">Logout</button>
+                                        <button type="submit" class="w-full px-4 py-3 text-left text-sm text-danger hover:bg-danger/10">Keluar</button>
                                     </form>
                                 </div>
                             </div>
                         @endif
                     @else
-                        <a href="{{ route('login') }}" class="btn-outline btn-sm">Login</a>
+                        <a href="{{ route('login') }}" class="btn-outline btn-sm">Masuk</a>
                     @endauth
                 </div>
             </div>
@@ -122,25 +134,25 @@
 
     {{-- MOBILE DROPDOWN --}}
     <div x-show="mobileOpen" x-transition x-cloak @click.outside="mobileOpen = false"
-         class="absolute inset-x-0 top-16 border-t border-app-border bg-app-surface md:hidden">
+         class="absolute inset-x-0 top-full border-t border-app-border bg-app-surface md:hidden">
         <nav class="flex flex-col divide-y divide-app-border px-6 py-4 text-sm">
-            @foreach (['home' => 'Home', 'about' => 'About', 'articles' => 'Articles', 'products' => 'Products', 'events' => 'Events', 'gallery' => 'Gallery', 'contact' => 'Contact'] as $route => $label)
+            @foreach (['home' => 'Beranda', 'about' => 'Tentang', 'articles' => 'Artikel', 'products' => 'Produk', 'events' => 'Kegiatan', 'gallery' => 'Galeri', 'contact' => 'Kontak'] as $route => $label)
                 <a href="{{ route($route) }}" class="py-3 text-app-text hover:text-app-heading">{{ $label }}</a>
             @endforeach
 
             @auth
                 @if(!auth()->user()->isAdmin())
-                    <a href="{{ route('cart.index') }}" class="py-3 text-app-text hover:text-app-heading">Cart</a>
-                    <a href="{{ route('orders.index') }}" class="py-3 text-app-text hover:text-app-heading">Orders</a>
-                    <a href="{{ route('user.messages.index') }}" class="py-3 text-app-text hover:text-app-heading">Messages</a>
-                    <a href="{{ route('profile.index') }}" class="py-3 text-app-text hover:text-app-heading">Profile</a>
+                    <a href="{{ route('cart.index') }}" class="py-3 text-app-text hover:text-app-heading">Keranjang</a>
+                    <a href="{{ route('orders.index') }}" class="py-3 text-app-text hover:text-app-heading">Pesanan</a>
+                    <a href="{{ route('user.messages.index') }}" class="py-3 text-app-text hover:text-app-heading">Pesan</a>
+                    <a href="{{ route('profile.index') }}" class="py-3 text-app-text hover:text-app-heading">Profil</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="w-full py-3 text-left text-danger">Logout</button>
+                        <button type="submit" class="w-full py-3 text-left text-danger">Keluar</button>
                     </form>
                 @endif
             @else
-                <a href="{{ route('login') }}" class="btn-outline btn-sm mt-4">Login</a>
+                <a href="{{ route('login') }}" class="btn-outline btn-sm mt-4">Masuk</a>
             @endauth
         </nav>
     </div>

@@ -59,5 +59,25 @@ class CompanyProfile extends Model
         'contact_subtitle',
         'location_eyebrow',
         'location_title',
+        'show_hero',
+        'show_vision',
+        'show_gallery',
+        'show_products',
+        'show_clients',
+        'show_contact',
+        'show_location',
+    ];
+
+    /**
+     * Cast the section visibility toggles to boolean.
+     */
+    protected $casts = [
+        'show_hero'     => 'boolean',
+        'show_vision'   => 'boolean',
+        'show_gallery'  => 'boolean',
+        'show_products' => 'boolean',
+        'show_clients'  => 'boolean',
+        'show_contact'  => 'boolean',
+        'show_location' => 'boolean',
     ];
 }

@@ -7,13 +7,17 @@
 <div class="mt-4">
 
     {{-- PAGE HEADER --}}
-    <div class="mb-8">
-        <h1 class="text-xl font-semibold text-app-heading">
-            Dashboard
-        </h1>
-        <p class="mt-1 text-sm text-app-muted">
-            Overview of content, activity, and recent orders
-        </p>
+    <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#a5813d]">Panel Admin</p>
+            <h1 class="mt-2 font-display text-3xl font-medium tracking-tight text-app-heading">
+                Dasbor
+            </h1>
+            <p class="mt-1 text-sm text-app-muted">
+                Ringkasan konten, aktivitas, dan pesanan terbaru
+            </p>
+        </div>
+        <span class="badge badge-gold">Hari ini · {{ now()->format('d M Y') }}</span>
     </div>
 
     {{-- STATS --}}
@@ -21,8 +25,8 @@
 
         {{-- ARTICLES --}}
         <x-admin.dashboard.stat-card
-            title="Articles"
-            subtitle="Published {{ $publishedArticles }} / {{ $totalArticles }}"
+            title="Artikel"
+            subtitle="Terbit {{ $publishedArticles }} / {{ $totalArticles }}"
             :value="$totalArticles"
         >
             <x-slot:icon>
@@ -31,22 +35,22 @@
 
             <x-slot:viewAll>
                 <x-common.button.link :href="route('admin.articles.index')">
-                    View all
+                    Lihat semua
                 </x-common.button.link>
             </x-slot:viewAll>
 
             <x-slot:action>
                 <x-admin.dashboard.quick-add
                     type="article"
-                    label="Article"
+                    label="Artikel"
                 />
             </x-slot:action>
         </x-admin.dashboard.stat-card>
 
         {{-- PRODUCTS --}}
         <x-admin.dashboard.stat-card
-            title="Products"
-            subtitle="Active {{ $activeProducts }} / {{ $totalProducts }}"
+            title="Produk"
+            subtitle="Aktif {{ $activeProducts }} / {{ $totalProducts }}"
             :value="$totalProducts"
         >
             <x-slot:icon>
@@ -55,22 +59,22 @@
 
             <x-slot:viewAll>
                 <x-common.button.link :href="route('admin.products.index')">
-                    View all
+                    Lihat semua
                 </x-common.button.link>
             </x-slot:viewAll>
 
             <x-slot:action>
                 <x-admin.dashboard.quick-add
                     type="product"
-                    label="Product"
+                    label="Produk"
                 />
             </x-slot:action>
         </x-admin.dashboard.stat-card>
 
         {{-- EVENTS --}}
         <x-admin.dashboard.stat-card
-            title="Events"
-            subtitle="Active {{ $activeEvents }} / {{ $totalEvents }}"
+            title="Kegiatan"
+            subtitle="Aktif {{ $activeEvents }} / {{ $totalEvents }}"
             :value="$totalEvents"
         >
             <x-slot:icon>
@@ -79,22 +83,22 @@
 
             <x-slot:viewAll>
                 <x-common.button.link :href="route('admin.events.index')">
-                    View all
+                    Lihat semua
                 </x-common.button.link>
             </x-slot:viewAll>
 
             <x-slot:action>
                 <x-admin.dashboard.quick-add
                     type="event"
-                    label="Event"
+                    label="Kegiatan"
                 />
             </x-slot:action>
         </x-admin.dashboard.stat-card>
 
         {{-- GALLERIES --}}
         <x-admin.dashboard.stat-card
-            title="Galleries"
-            subtitle="Active {{ $activeGalleries }} / {{ $totalGalleries }}"
+            title="Galeri"
+            subtitle="Aktif {{ $activeGalleries }} / {{ $totalGalleries }}"
             :value="$totalGalleries"
         >
             <x-slot:icon>
@@ -103,22 +107,22 @@
 
             <x-slot:viewAll>
                 <x-common.button.link :href="route('admin.gallery.index')">
-                    View all
+                    Lihat semua
                 </x-common.button.link>
             </x-slot:viewAll>
 
             <x-slot:action>
                 <x-admin.dashboard.quick-add
                     type="gallery"
-                    label="Gallery"
+                    label="Galeri"
                 />
             </x-slot:action>
         </x-admin.dashboard.stat-card>
 
         {{-- CLIENTS --}}
         <x-admin.dashboard.stat-card
-            title="Clients"
-            subtitle="Active {{ $activeClients }} / {{ $totalClients }}"
+            title="Mitra"
+            subtitle="Aktif {{ $activeClients }} / {{ $totalClients }}"
             :value="$totalClients"
         >
             <x-slot:icon>
@@ -127,14 +131,14 @@
 
             <x-slot:viewAll>
                 <x-common.button.link :href="route('admin.clients.index')">
-                    View all
+                    Lihat semua
                 </x-common.button.link>
             </x-slot:viewAll>
 
             <x-slot:action>
                 <x-admin.dashboard.quick-add
                     type="client"
-                    label="Client"
+                    label="Mitra"
                 />
             </x-slot:action>
         </x-admin.dashboard.stat-card>

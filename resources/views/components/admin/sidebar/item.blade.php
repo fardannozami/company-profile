@@ -1,4 +1,4 @@
-{{-- Sidebar navigation link with active state. --}}
+{{-- Sidebar navigation link with active state — gold rail on ink. --}}
 @props([
     'href',
     'active' => false,
@@ -7,27 +7,27 @@
 
 <a
     href="{{ $href }}"
-    class="flex items-center justify-between gap-3
+    class="relative flex items-center justify-between gap-3
            rounded-xl px-3 py-2 transition
            {{ $active
-                ? 'bg-indigo-500/10 text-brand-accent'
-                : 'text-app-muted hover:bg-app-surface-2 hover:text-app-heading'
+                ? 'bg-white/[0.07] text-white'
+                : 'text-[#a7abc7] hover:bg-white/[0.05] hover:text-white'
            }}"
 >
+    @if ($active)
+        <span aria-hidden="true" class="absolute left-0 top-1/2 h-6 w-[3px] -translate-y-1/2 rounded-full bg-[#c6a15b]"></span>
+    @endif
+
     <div class="flex items-center gap-3">
         @if ($icon)
-            <span class="relative shrink-0">
+            <span class="relative shrink-0 {{ $active ? 'text-[#c6a15b]' : '' }}">
                 <x-common.icon :name="$icon" class="h-5 w-5" />
 
-                {{-- Dot indicator: the only visible cue when the sidebar is collapsed to
-                     icon-only width, since the text badge below is hidden in that state.
-                     Not shown on mobile — the drawer is either fully open (full badge below)
-                     or fully closed (nothing on screen at all). --}}
                 @if (isset($badge))
                     <span
                         x-show="!$store.sidebar.isExpanded && !$store.sidebar.isMobileOpen"
                         x-cloak
-                        class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-brand-main ring-2 ring-[var(--color-app-bg)]"
+                        class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-[#c6a15b] ring-2 ring-[#141834]"
                     ></span>
                 @endif
             </span>
@@ -49,10 +49,10 @@
         <span
             x-show="$store.sidebar.isExpanded || $store.sidebar.isMobileOpen"
             class="ml-auto rounded-full
-                   bg-indigo-500/20
+                   bg-[#c6a15b]/15
                    px-2 py-0.5
                    text-xs font-medium
-                   text-brand-accent"
+                   text-[#c6a15b]"
         >
             {{ $badge }}
         </span>

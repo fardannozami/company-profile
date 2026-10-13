@@ -1,11 +1,11 @@
 {{-- Dashboard widget: table of the most recent orders with payment status and a link to each. --}}
 @props(['orders'])
 
-<div class="surface rounded-2xl p-6">
+<div class="surface gold-topline rounded-2xl p-6">
 
     {{-- HEADER --}}
     <div class="mb-5 flex items-center justify-between">
-        <h2 class="text-sm font-semibold text-app-heading">Recent orders</h2>
+        <h2 class="font-display text-lg font-medium text-app-heading">Pesanan terbaru</h2>
         <x-common.button.link :href="route('admin.orders.index')">View all</x-common.button.link>
     </div>
 
@@ -14,11 +14,11 @@
         <table class="admin-table">
             <thead>
                 <tr>
-                    <th>Order</th>
-                    <th>Customer</th>
-                    <th>Products</th>
+                    <th>Pesanan</th>
+                    <th>Pelanggan</th>
+                    <th>Produk</th>
                     <th>Status</th>
-                    <th class="text-right">Action</th>
+                    <th class="text-right">Aksi</th>
                 </tr>
             </thead>
 
@@ -55,7 +55,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="admin-table-empty">No recent orders</td>
+                        <td colspan="5" class="admin-table-empty">Belum ada pesanan terbaru</td>
                     </tr>
                 @endforelse
             </tbody>

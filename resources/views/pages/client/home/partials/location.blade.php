@@ -11,8 +11,8 @@
 
                 {{-- Address & quick contact --}}
                 <div>
-                    <span class="eyebrow">{{ $companyProfile->location_eyebrow ?? 'Visit us' }}</span>
-                    <h2 class="section-title">{{ $companyProfile->location_title ?? 'Where to find us' }}</h2>
+                    <span class="section-index">04 — {{ $companyProfile->location_eyebrow ?? 'Lokasi' }}</span>
+                    <h2 class="section-title mt-3">{{ $companyProfile->location_title ?? 'Kunjungi sekretariat kami' }}</h2>
 
                     @if (filled($companyProfile->address))
                         <p class="section-subtitle">{{ $companyProfile->address }}</p>

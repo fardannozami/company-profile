@@ -20,11 +20,8 @@ class HomepageSettingController extends Controller
         'hero_cta_primary',
         'hero_cta_secondary',
         'hero_availability',
-        'vision_eyebrow',
-        'strength_1',
-        'strength_2',
-        'strength_3',
-        'strength_4',
+        'vision',
+        'mission',
         'gallery_eyebrow',
         'gallery_title',
         'gallery_subtitle',
@@ -39,6 +36,19 @@ class HomepageSettingController extends Controller
         'contact_subtitle',
         'location_eyebrow',
         'location_title',
+    ];
+
+    /**
+     * Per-section visibility toggles (boolean, default true = section shown).
+     */
+    public const TOGGLES = [
+        'show_hero',
+        'show_vision',
+        'show_gallery',
+        'show_products',
+        'show_clients',
+        'show_contact',
+        'show_location',
     ];
 
     /**
@@ -76,11 +86,8 @@ class HomepageSettingController extends Controller
             'hero_cta_primary'     => 'nullable|string|max:255',
             'hero_cta_secondary'   => 'nullable|string|max:255',
             'hero_availability'    => 'nullable|string|max:255',
-            'vision_eyebrow'       => 'nullable|string|max:255',
-            'strength_1'           => 'nullable|string|max:255',
-            'strength_2'           => 'nullable|string|max:255',
-            'strength_3'           => 'nullable|string|max:255',
-            'strength_4'           => 'nullable|string|max:255',
+            'vision'               => 'nullable|string|max:1000',
+            'mission'              => 'nullable|string|max:1000',
             'gallery_eyebrow'      => 'nullable|string|max:255',
             'gallery_title'        => 'nullable|string|max:255',
             'gallery_subtitle'     => 'nullable|string|max:255',
@@ -95,6 +102,13 @@ class HomepageSettingController extends Controller
             'contact_subtitle'     => 'nullable|string|max:255',
             'location_eyebrow'     => 'nullable|string|max:255',
             'location_title'       => 'nullable|string|max:255',
+            'show_hero'            => 'nullable|boolean',
+            'show_vision'          => 'nullable|boolean',
+            'show_gallery'         => 'nullable|boolean',
+            'show_products'        => 'nullable|boolean',
+            'show_clients'         => 'nullable|boolean',
+            'show_contact'         => 'nullable|boolean',
+            'show_location'        => 'nullable|boolean',
         ]);
 
         /**
@@ -102,8 +116,16 @@ class HomepageSettingController extends Controller
          * Non-homepage columns (company_name, about, ...) are never touched here.
          */
         $homepageOnly = collect($validated)
-            ->only(self::FIELDS)
+            ->only(array_merge(self::FIELDS, self::TOGGLES))
             ->toArray();
+
+        /**
+         * Unchecked toggles are absent from the request — resolve every toggle
+         * explicitly so unchecking a section actually hides it.
+         */
+        foreach (self::TOGGLES as $toggle) {
+            $homepageOnly[$toggle] = $request->boolean($toggle);
+        }
 
         /**
          * Update or create the company profile.

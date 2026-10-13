@@ -7,8 +7,8 @@
 @section('content')
 
 <x-common.component-card
-    title="Homepage Settings"
-    desc="Manage the texts shown on the public homepage (blank = default text)"
+    title="Pengaturan Homepage"
+    desc="Kelola teks yang tampil di beranda publik (kosongkan untuk memakai teks bawaan)"
     class="admin-card"
 >
     <x-admin.homepage-settings.form

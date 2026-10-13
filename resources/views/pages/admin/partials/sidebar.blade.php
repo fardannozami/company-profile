@@ -17,8 +17,7 @@
     "
 
     class="fixed top-0 left-0 z-50 h-screen
-           admin-scope
-           border-r border-[var(--color-border-soft)]
+           admin-scope admin-rail
            transition-[width] duration-300 ease-out
            xl:translate-x-0
            overflow-hidden"
@@ -49,7 +48,7 @@
                     :active="request()->is('admin/dashboard*')"
                     icon="dashboard"
                 >
-                    Dashboard
+                    Dasbor
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -57,7 +56,7 @@
                     :active="request()->is('admin/company-profile*')"
                     icon="company"
                 >
-                    Company Profile
+                    Profil Organisasi
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -65,7 +64,7 @@
                     :active="request()->is('admin/homepage-settings*')"
                     icon="article"
                 >
-                    Homepage
+                    Beranda
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -73,7 +72,7 @@
                     :active="request()->is('admin/orders*')"
                     icon="orders"
                 >
-                    Orders
+                    Pesanan
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -81,7 +80,7 @@
                     :active="request()->is('admin/messages*')"
                     icon="inbox"
                 >
-                    Inbox
+                    Kotak Masuk
 
                     @if (!empty($unreadInboxCount) && $unreadInboxCount > 0)
                         <x-slot:badge>
@@ -96,20 +95,20 @@
                     :active="request()->is('admin/users*')"
                     icon="user"
                 >
-                    Users
+                    Pengguna
                 </x-admin.sidebar.item>
             </div>
 
             {{-- ========== CONTENT ========= --}}
             <div class="space-y-0.5">
-                <x-admin.sidebar.label>Content</x-admin.sidebar.label>
+                <x-admin.sidebar.label>Konten</x-admin.sidebar.label>
 
                 <x-admin.sidebar.item
                     href="{{ route('admin.articles.index') }}"
                     :active="request()->is('admin/articles*')"
                     icon="article"
                 >
-                    Articles
+                    Artikel
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -117,7 +116,7 @@
                     :active="request()->is('admin/products*')"
                     icon="product"
                 >
-                    Products
+                    Produk
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -125,7 +124,7 @@
                     :active="request()->is('admin/events*')"
                     icon="event"
                 >
-                    Events
+                    Kegiatan
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -133,7 +132,7 @@
                     :active="request()->is('admin/gallery*')"
                     icon="gallery"
                 >
-                    Gallery
+                    Galeri
                 </x-admin.sidebar.item>
 
                 <x-admin.sidebar.item
@@ -141,7 +140,7 @@
                     :active="request()->is('admin/clients*')"
                     icon="client"
                 >
-                    Clients
+                    Mitra
                 </x-admin.sidebar.item>
             </div>
 

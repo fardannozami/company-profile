@@ -11,11 +11,11 @@
     'mx-auto text-center' => $align === 'center',
 ]) }}>
     @if ($eyebrow)
-        <span class="eyebrow">{{ $eyebrow }}</span>
+        <span class="eyebrow {{ $align === 'center' ? 'eyebrow--center' : '' }}">{{ $eyebrow }}</span>
     @endif
 
     @if ($title)
-        <h2 class="section-title">{{ $title }}</h2>
+        <h2 class="section-title mt-3">{{ $title }}</h2>
     @endif
 
     @if ($subtitle)

@@ -3,12 +3,15 @@
     <div class="mx-auto max-w-7xl px-6">
 
         <div x-data x-reveal class="mb-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <x-section-heading
-                :eyebrow="$companyProfile->products_eyebrow ?? 'What we offer'"
-                :title="$companyProfile->products_title ?? 'Products & services'"
-                :subtitle="$companyProfile->products_subtitle ?? 'Digital solutions built to support growth, performance, and long-term scalability.'" />
+            <div>
+                <span class="section-index">03 — Karya &amp; usaha</span>
+                <x-section-heading
+                    :eyebrow="$companyProfile->products_eyebrow ?? 'Produk kami'"
+                    :title="$companyProfile->products_title ?? 'Buah karya kader'"
+                    :subtitle="$companyProfile->products_subtitle ?? 'Produk dan layanan yang menopang kemandirian gerakan.'" />
+            </div>
             <a href="{{ route('products') }}" class="btn-ghost btn-sm self-start sm:self-auto">
-                View all products >
+                Lihat semua produk >
             </a>
         </div>
 
@@ -17,7 +20,7 @@
                 <x-product-card :product="$product" />
             @empty
                 <div class="surface col-span-full rounded-2xl py-16 text-center text-app-muted">
-                    No products available yet.
+                    Belum ada produk saat ini.
                 </div>
             @endforelse
         </div>

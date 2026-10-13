@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\AboutSection;
 use App\Models\Gallery;
 
 class CompanyProfileController extends Controller
@@ -22,6 +23,7 @@ class CompanyProfileController extends Controller
 
         return view('pages.client.about.index', [
             'aboutImage' => $aboutImage,
+            'aboutSections' => AboutSection::active()->get(),
         ]);
     }
 }

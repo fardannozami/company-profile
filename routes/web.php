@@ -20,6 +20,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Admin\{
     DashboardController,
     CompanyProfileController,
+    AboutSectionController,
     HomepageSettingController,
     ArticleController,
     ProductController,
@@ -97,6 +98,7 @@ Route::middleware(['auth', 'admin'])
             ->name('homepage-settings.update');
 
         Route::resource('articles', ArticleController::class);
+        Route::resource('about-sections', AboutSectionController::class);
         Route::resource('products', ProductController::class);
         Route::resource('events', EventController::class);
         Route::resource('gallery', GalleryController::class);

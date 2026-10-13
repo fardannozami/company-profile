@@ -104,6 +104,14 @@
                 <x-admin.sidebar.label>Konten</x-admin.sidebar.label>
 
                 <x-admin.sidebar.item
+                    href="{{ route('admin.about-sections.index') }}"
+                    :active="request()->is('admin/about-sections*')"
+                    icon="article"
+                >
+                    Tentang
+                </x-admin.sidebar.item>
+
+                <x-admin.sidebar.item
                     href="{{ route('admin.articles.index') }}"
                     :active="request()->is('admin/articles*')"
                     icon="article"

@@ -276,4 +276,57 @@ class ProductController extends Controller
             ->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
     }
+
+    /**
+     * Remove multiple products from storage.
+     *
+     * Responsibilities:
+     * - Validate the selected product IDs
+     * - Skip products tied to existing orders (mirroring destroy())
+     * - Delete each image/download file, mirroring destroy()
+     * - Remove the product records from the database
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:products,id',
+        ]);
+
+        $count = 0;
+        $skipped = 0;
+
+        foreach (Product::whereIn('id', $validated['ids'])->get() as $product) {
+            // Block deletion when the product is part of existing orders (protects purchase history).
+            if ($product->orderItems()->exists()) {
+                $skipped++;
+                continue;
+            }
+
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+            if ($product->download_path) {
+                // Paid files may live on either disk (new = private, legacy = public).
+                Storage::disk('local')->delete($product->download_path);
+                Storage::disk('public')->delete($product->download_path);
+            }
+
+            $product->delete();
+            $count++;
+        }
+
+        $message = "Deleted {$count} product(s).";
+
+        if ($skipped > 0) {
+            $message .= " {$skipped} skipped (have orders).";
+        }
+
+        if ($count === 0 && $skipped > 0) {
+            return back()->with('error', $message);
+        }
+
+        return back()->with('success', $message);
+    }
 }

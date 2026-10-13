@@ -189,4 +189,34 @@ class ArticleController extends Controller
             ->route('admin.articles.index')
             ->with('success', 'Article deleted successfully.');
     }
+
+    /**
+     * Remove multiple articles from storage.
+     *
+     * Responsibilities:
+     * - Validate the selected article IDs
+     * - Delete each thumbnail file (if exists), mirroring destroy()
+     * - Remove the article records from the database
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:articles,id',
+        ]);
+
+        $count = 0;
+
+        foreach (Article::whereIn('id', $validated['ids'])->get() as $article) {
+            // Delete thumbnail file if it exists
+            if ($article->thumbnail && Storage::disk('public')->exists($article->thumbnail)) {
+                Storage::disk('public')->delete($article->thumbnail);
+            }
+
+            $article->delete();
+            $count++;
+        }
+
+        return back()->with('success', "Deleted {$count} article(s).");
+    }
 }

@@ -199,4 +199,30 @@ class GalleryController extends Controller
 
         return back()->with('success', 'Gallery deleted');
     }
+
+    /**
+     * Remove multiple gallery items from storage.
+     *
+     * Responsibilities:
+     * - Validate the selected gallery IDs
+     * - Delete each image file, mirroring destroy()
+     * - Remove the gallery records from the database
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:galleries,id',
+        ]);
+
+        $count = 0;
+
+        foreach (Gallery::whereIn('id', $validated['ids'])->get() as $gallery) {
+            Storage::disk('public')->delete($gallery->image);
+            $gallery->delete();
+            $count++;
+        }
+
+        return back()->with('success', "Deleted {$count} gallery item(s).");
+    }
 }

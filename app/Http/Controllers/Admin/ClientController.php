@@ -169,6 +169,35 @@ class ClientController extends Controller
     }
 
     /**
+     * Remove multiple clients from storage.
+     *
+     * Responsibilities:
+     * - Validate the selected client IDs
+     * - Delete each logo file (if exists), mirroring destroy()
+     * - Remove the client records from the database
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:clients,id',
+        ]);
+
+        $count = 0;
+
+        foreach (Client::whereIn('id', $validated['ids'])->get() as $client) {
+            if ($client->logo && Storage::disk('public')->exists($client->logo)) {
+                Storage::disk('public')->delete($client->logo);
+            }
+
+            $client->delete();
+            $count++;
+        }
+
+        return back()->with('success', "Deleted {$count} client(s).");
+    }
+
+    /**
      * Handle client order movement actions.
      *
      * Supported actions:

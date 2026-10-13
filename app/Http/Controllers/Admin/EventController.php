@@ -163,4 +163,33 @@ class EventController extends Controller
             ->route('admin.events.index')
             ->with('success', 'Event deleted successfully.');
     }
+
+    /**
+     * Remove multiple events from storage.
+     *
+     * Responsibilities:
+     * - Validate the selected event IDs
+     * - Delete each image file (if exists), mirroring destroy()
+     * - Remove the event records from the database
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $validated = $request->validate([
+            'ids'   => 'required|array|min:1',
+            'ids.*' => 'exists:events,id',
+        ]);
+
+        $count = 0;
+
+        foreach (Event::whereIn('id', $validated['ids'])->get() as $event) {
+            if ($event->image && Storage::disk('public')->exists($event->image)) {
+                Storage::disk('public')->delete($event->image);
+            }
+
+            $event->delete();
+            $count++;
+        }
+
+        return back()->with('success', "Deleted {$count} event(s).");
+    }
 }

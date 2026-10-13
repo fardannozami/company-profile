@@ -19,11 +19,25 @@
         </a>
     </div>
 
+    {{-- BULK ACTIONS --}}
+    <form id="bulk-gallery-form" method="POST" action="{{ route('admin.gallery.bulk-destroy') }}" class="mb-3 flex flex-wrap items-center gap-3">
+        @csrf
+        <label class="flex items-center gap-2 text-sm text-app-muted">
+            <input type="checkbox" data-bulk-select-all="bulk-gallery-form" class="h-4 w-4">
+            Pilih semua
+        </label>
+        <button type="submit" class="btn-danger text-xs disabled:cursor-not-allowed disabled:opacity-50" data-bulk-submit disabled>
+            Hapus yang dipilih (<span data-bulk-count>0</span>)
+        </button>
+    </form>
+
     {{-- GRID --}}
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 
         @forelse ($galleries as $gallery)
-            <div class="rounded-xl border border-app-border overflow-hidden">
+            <div class="relative rounded-xl border border-app-border overflow-hidden">
+
+                <input type="checkbox" name="ids[]" value="{{ $gallery->id }}" form="bulk-gallery-form" data-bulk-item="bulk-gallery-form" class="absolute left-2 top-2 z-10 h-4 w-4" aria-label="Pilih gambar">
 
                 <img
                     src="{{ asset('storage/'.$gallery->image) }}"
@@ -71,6 +85,35 @@
     <div class="mt-6">
         {{ $galleries->links() }}
     </div>
+
+    {{-- BULK SELECT BEHAVIOR --}}
+    <script>
+    (function () {
+        const formId = 'bulk-gallery-form';
+        const form = document.getElementById(formId);
+        if (!form) return;
+        const itemBoxes = () => Array.from(document.querySelectorAll('input[data-bulk-item="' + formId + '"]'));
+        const selectAllBox = document.querySelector('input[data-bulk-select-all="' + formId + '"]');
+        const submitBtn = form.querySelector('[data-bulk-submit]');
+        const countLabel = form.querySelector('[data-bulk-count]');
+        const refresh = () => {
+            const checked = itemBoxes().filter((b) => b.checked).length;
+            if (countLabel) countLabel.textContent = checked;
+            if (submitBtn) submitBtn.disabled = checked === 0;
+            if (selectAllBox) selectAllBox.checked = itemBoxes().length > 0 && checked === itemBoxes().length;
+        };
+        if (selectAllBox) selectAllBox.addEventListener('change', () => {
+            itemBoxes().forEach((b) => { b.checked = selectAllBox.checked; });
+            refresh();
+        });
+        itemBoxes().forEach((b) => b.addEventListener('change', refresh));
+        form.addEventListener('submit', (e) => {
+            const checked = itemBoxes().filter((b) => b.checked).length;
+            if (checked === 0 || !confirm('Hapus ' + checked + ' gambar yang dipilih?')) e.preventDefault();
+        });
+        refresh();
+    })();
+    </script>
 
 </x-common.component-card>
 @endsection

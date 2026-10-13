@@ -97,11 +97,16 @@ Route::middleware(['auth', 'admin'])
         Route::match(['put', 'patch'], '/homepage-settings', [HomepageSettingController::class, 'update'])
             ->name('homepage-settings.update');
 
+        Route::post('articles/bulk-destroy', [ArticleController::class, 'bulkDestroy'])->name('articles.bulk-destroy');
         Route::resource('articles', ArticleController::class);
         Route::resource('about-sections', AboutSectionController::class);
+        Route::post('products/bulk-destroy', [ProductController::class, 'bulkDestroy'])->name('products.bulk-destroy');
         Route::resource('products', ProductController::class);
+        Route::post('events/bulk-destroy', [EventController::class, 'bulkDestroy'])->name('events.bulk-destroy');
         Route::resource('events', EventController::class);
+        Route::post('gallery/bulk-destroy', [GalleryController::class, 'bulkDestroy'])->name('gallery.bulk-destroy');
         Route::resource('gallery', GalleryController::class);
+        Route::post('clients/bulk-destroy', [ClientController::class, 'bulkDestroy'])->name('clients.bulk-destroy');
         Route::resource('clients', ClientController::class);
         Route::resource('users', UserController::class);
 

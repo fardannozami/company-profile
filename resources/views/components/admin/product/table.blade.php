@@ -3,11 +3,22 @@
 
 @php use Illuminate\Support\Str; @endphp
 
+{{-- BULK ACTIONS --}}
+<form id="bulk-products-form" method="POST" action="{{ route('admin.products.bulk-destroy') }}" class="mb-3 flex items-center gap-3">
+    @csrf
+    <button type="submit" class="btn-danger text-xs disabled:cursor-not-allowed disabled:opacity-50" data-bulk-submit disabled>
+        Hapus yang dipilih (<span data-bulk-count>0</span>)
+    </button>
+</form>
+
 <div class="overflow-x-auto">
     <table class="admin-table w-full">
 
         <thead>
             <tr>
+                <th class="w-10">
+                    <input type="checkbox" data-bulk-select-all="bulk-products-form" class="h-4 w-4" aria-label="Pilih semua">
+                </th>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -21,6 +32,10 @@
         <tbody>
             @forelse ($products as $product)
                 <tr>
+
+                    <td>
+                        <input type="checkbox" name="ids[]" value="{{ $product->id }}" form="bulk-products-form" data-bulk-item="bulk-products-form" class="h-4 w-4" aria-label="Pilih produk">
+                    </td>
 
                     <td>
                         @if ($product->image)
@@ -81,7 +96,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" class="admin-table-empty">
+                    <td colspan="8" class="admin-table-empty">
                         No products found
                     </td>
                 </tr>
@@ -90,3 +105,32 @@
 
     </table>
 </div>
+
+{{-- BULK SELECT BEHAVIOR --}}
+<script>
+(function () {
+    const formId = 'bulk-products-form';
+    const form = document.getElementById(formId);
+    if (!form) return;
+    const itemBoxes = () => Array.from(document.querySelectorAll('input[data-bulk-item="' + formId + '"]'));
+    const selectAllBox = document.querySelector('input[data-bulk-select-all="' + formId + '"]');
+    const submitBtn = form.querySelector('[data-bulk-submit]');
+    const countLabel = form.querySelector('[data-bulk-count]');
+    const refresh = () => {
+        const checked = itemBoxes().filter((b) => b.checked).length;
+        if (countLabel) countLabel.textContent = checked;
+        if (submitBtn) submitBtn.disabled = checked === 0;
+        if (selectAllBox) selectAllBox.checked = itemBoxes().length > 0 && checked === itemBoxes().length;
+    };
+    if (selectAllBox) selectAllBox.addEventListener('change', () => {
+        itemBoxes().forEach((b) => { b.checked = selectAllBox.checked; });
+        refresh();
+    });
+    itemBoxes().forEach((b) => b.addEventListener('change', refresh));
+    form.addEventListener('submit', (e) => {
+        const checked = itemBoxes().filter((b) => b.checked).length;
+        if (checked === 0 || !confirm('Hapus ' + checked + ' produk yang dipilih?')) e.preventDefault();
+    });
+    refresh();
+})();
+</script>

@@ -36,50 +36,59 @@
             }" x-cloak
             class="mt-12 surface gold-topline relative overflow-hidden rounded-2xl border border-[#141834]/12 p-6 sm:p-8 max-w-4xl mx-auto lg:max-w-5xl">
 
-            <div class="flex flex-col lg:flex lg:items-start lg:gap-8">
+            <div class="flex flex-col lg:flex-col lg:items-stretch lg:gap-8">
 
                 {{-- Kontrol tab: numeralis besar sebagai tombol (baris 2 kolom di mobile, rail kiri di desktop) --}}
                 <div role="tablist" aria-label="Pilih Visi atau Misi" @keydown="move($event)"
-                     class="grid grid-cols-2 border border-[#141834]/20 rounded-xl overflow-hidden
-                            mb-6 sm:mb-8
-                            lg:flex lg:flex-col lg:w-[260px] lg:flex-shrink-0 lg:border-0 lg:rounded-none lg:mb-0">
+                     class="grid grid-cols-2 gap-3 rounded-2xl bg-[#141834]/6 p-1
+                            mb-6 sm:mb-8 lg:mb-6
+                            lg:flex lg:flex-row lg:gap-3">
 
                     {{-- Visi (aktif secara default) --}}
                     <button type="button" role="tab" id="tab-vision" aria-controls="vision-panel"
                             :aria-selected="tab === 'visi'"
                             :tabindex="tab === 'visi' ? 0 : -1"
                             @click="select(0)"
-                            class="flex w-full flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between
-                                   px-5 sm:px-6 py-4 sm:py-4.5 lg:py-7 lg:px-7 text-left
-                                   bg-transparent
-                                   border-r border-r-[#141834]/20 lg:border-r-0 lg:border-b lg:border-b-[#141834]/20
-                                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141834] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f0]
-                                   transition-colors duration-200"
-                            :class="tab === 'visi' ? 'bg-[#141834]' : 'bg-transparent'">
-                        <span class="font-display text-5xl leading-none"
-                              :class="tab === 'visi' ? 'text-[#c6a15b]' : 'text-[#c6a15b]/30'"
-                              aria-hidden="true">01</span>
-                        <span class="text-[11px] font-semibold uppercase tracking-[0.22em]"
-                              :class="tab === 'visi' ? 'text-white' : 'text-[#141834]/60'">Visi</span>
-                    </button>
+                            class="flex w-full flex-col items-center justify-center gap-2
+                                   px-5 sm:px-6 py-5 lg:py-6 lg:px-8 text-center lg:w-1/2
+                                   rounded-xl lg:rounded-2xl
+                                   border border-transparent
+                                   transition-all duration-200 ease-out motion-reduce:transition-none
+                                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141834] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f0]"
+                            :class="tab === 'visi'
+                                    ? 'bg-[#141834] shadow-lg shadow-[#141834]/35 ring-1 ring-[#c6a15b]/45'
+                                    : 'bg-transparent border border-[#141834]/20 hover:bg-[#141834]/8'"
+                        >
+                            <span class="font-display text-4xl lg:text-5xl leading-none tracking-tight
+                                      :class="tab === 'visi' ? 'text-[#c6a15b]' : 'text-[#c6a15b]/35'"
+                                      aria-hidden="true">01</span>
+                            <span class="text-[11px] lg:text-sm font-semibold uppercase tracking-wider
+                                      :class="tab === 'visi' ? 'text-white' : 'text-[#141834]/65'"
+                                      >Visi</span>
+                        </button>
 
                     {{-- Misi --}}
                     <button type="button" role="tab" id="tab-mission" aria-controls="mission-panel"
                             :aria-selected="tab === 'misi'"
                             :tabindex="tab === 'misi' ? 0 : -1"
                             @click="select(1)"
-                            class="flex w-full flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between
-                                   px-5 sm:px-6 py-4 sm:py-4.5 lg:py-7 lg:px-7 text-left
-                                   bg-transparent
-                                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141834] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f0]
-                                   transition-colors duration-200"
-                            :class="tab === 'misi' ? 'bg-[#141834]' : 'bg-transparent'">
-                        <span class="font-display text-5xl leading-none"
-                              :class="tab === 'misi' ? 'text-[#c6a15b]' : 'text-[#c6a15b]/30'"
-                              aria-hidden="true">02</span>
-                        <span class="text-[11px] font-semibold uppercase tracking-[0.22em]"
-                              :class="tab === 'misi' ? 'text-white' : 'text-[#141834]/60'">Misi</span>
-                    </button>
+                            class="flex w-full flex-col items-center justify-center gap-2
+                                   px-5 sm:px-6 py-5 lg:py-6 lg:px-8 text-center lg:w-1/2
+                                   rounded-xl lg:rounded-2xl
+                                   border border-transparent
+                                   transition-all duration-200 ease-out motion-reduce:transition-none
+                                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#141834] focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf7f0]"
+                            :class="tab === 'misi'
+                                    ? 'bg-[#141834] shadow-lg shadow-[#141834]/35 ring-1 ring-[#c6a15b]/45'
+                                    : 'bg-transparent border border-[#141834]/20 hover:bg-[#141834]/8'"
+                        >
+                            <span class="font-display text-4xl lg:text-5xl leading-none tracking-tight
+                                      :class="tab === 'misi' ? 'text-[#c6a15b]' : 'text-[#c6a15b]/35'"
+                                      aria-hidden="true">02</span>
+                            <span class="text-[11px] lg:text-sm font-semibold uppercase tracking-wider
+                                      :class="tab === 'misi' ? 'text-white' : 'text-[#141834]/65'"
+                                      >Misi</span>
+                        </button>
                 </div>
 
                 {{-- Isi kartu: satu panel kontinyu dengan tinggi stabil saat beralih tab --}}
@@ -92,7 +101,7 @@
                          x-transition:leave="transition-opacity duration-150 ease-in motion-reduce:transition-none"
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 translate-y-1"
-                         class="min-h-[240px] lg:min-h-[320px]">
+                         class="min-h-[200px] lg:min-h-[220px]">
                         <p class="mt-6 font-display text-xl leading-relaxed text-app-heading sm:text-2xl">
                             {{ filled($companyProfile->vision) ? $companyProfile->vision : 'Menjadi gerakan kader muda yang berkemajuan dan mencerahkan.' }}
                         </p>
@@ -105,7 +114,7 @@
                          x-transition:leave="transition-opacity duration-150 ease-in motion-reduce:transition-none"
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 translate-y-1"
-                         class="min-h-[240px] lg:min-h-[320px]">
+                         class="min-h-[200px] lg:min-h-[220px]">
                         <p class="mt-6 font-display text-xl leading-relaxed text-app-heading sm:text-2xl">
                             {{ filled($companyProfile->mission) ? $companyProfile->mission : 'Menguatkan kader, menghidupkan dakwah, dan memberi manfaat nyata bagi umat.' }}
                         </p>

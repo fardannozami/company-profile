@@ -59,7 +59,16 @@ class UserController extends Controller
          */
         $data['password'] = Hash::make($data['password']);
 
-        User::create($data);
+        /**
+         * SECURITY: 'role' is not mass-assignable (see User::$fillable).
+         * Assign it explicitly so a crafted request can never escalate
+         * privileges through mass assignment.
+         */
+        $role = $data['role'];
+        unset($data['role']);
+
+        $user = User::create($data);
+        $user->forceFill(['role' => $role])->save();
 
         return redirect()
             ->route('admin.users.index')
@@ -120,7 +129,16 @@ class UserController extends Controller
             unset($data['password']);
         }
 
+        /**
+         * SECURITY: 'role' is not mass-assignable (see User::$fillable).
+         * Assign it explicitly so a crafted request can never escalate
+         * privileges through mass assignment.
+         */
+        $role = $data['role'];
+        unset($data['role']);
+
         $user->update($data);
+        $user->forceFill(['role' => $role])->save();
 
         return redirect()
             ->route('admin.users.index')

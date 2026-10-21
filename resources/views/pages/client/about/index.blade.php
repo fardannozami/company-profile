@@ -124,7 +124,7 @@
 
             @if (trim(strip_tags($profileIntro)) !== '')
                 <div x-data x-reveal class="wp-profile text-lg leading-relaxed">
-                    {!! $profileIntro !!}
+                    {!! \App\Support\HtmlSanitizer::clean($profileIntro) !!}
                 </div>
             @endif
 
@@ -138,7 +138,7 @@
                         </h2>
                     </div>
                     <div x-data x-reveal="{ delay: 100 }" class="wp-profile mt-6">
-                        {!! $section['body'] !!}
+                        {!! \App\Support\HtmlSanitizer::clean($section['body']) !!}
                     </div>
                 </article>
             @endforeach

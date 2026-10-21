@@ -16,12 +16,15 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * These fields can be safely filled using create() or update().
+     *
+     * NOTE: 'role' is intentionally NOT mass-assignable. It must be set
+     * explicitly via forceFill() inside the admin controller so that
+     * user-submitted input can never escalate privileges.
      */
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role',
     ];
 
     /* ======================

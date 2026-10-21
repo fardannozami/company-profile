@@ -19,18 +19,25 @@ class DatabaseSeeder extends Seeder
             GallerySeeder::class,
         ]);
 
-        User::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin123'),
-            'role' => 'admin',
-        ]);
+        /*
+         | Demo accounts are created for local development only. They are
+         | intentionally skipped in production so a deployed app never ships
+         | with known credentials; create real accounts via /admin/users.
+         */
+        if (app()->environment('local')) {
+            $admin = User::create([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin123'),
+            ]);
+            $admin->forceFill(['role' => 'admin'])->save();
 
-        User::create([
-            'name' => 'user',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('user123'),
-            'role' => 'user',
-        ]);
+            $user = User::create([
+                'name' => 'user',
+                'email' => 'user@gmail.com',
+                'password' => Hash::make('user123'),
+            ]);
+            $user->forceFill(['role' => 'user'])->save();
+        }
     }
 }

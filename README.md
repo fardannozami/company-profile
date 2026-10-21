@@ -431,12 +431,7 @@ That last step is required, not optional — the site will 500 on every page (`V
 
 The app is now available at **http://localhost:8000**.
 
-The seeder creates two accounts you can log in with right away:
-
-| Role | Email | Password |
-|---|---|---|
-| Admin | `admin@gmail.com` | `admin123` |
-| User | `user@gmail.com` | `user123` |
+Kredensial administrator tidak dipublikasikan. Akun dibuat melalui panel admin (/admin/users).
 
 > Any future `composer` / `artisan` / `npm` command should be run the same way, prefixed with `docker compose exec app`.
 

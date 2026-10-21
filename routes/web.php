@@ -70,9 +70,9 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.submit')
     ->middleware('throttle:8,1'); // max 8 login attempts per minute per IP (anti brute-force)
 
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.submit')
-    ->middleware('throttle:5,1'); // limit signup spam
+// Registration is closed in production; admins create accounts via /admin/users.
+// Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+// Route::post('/register', [AuthController::class, 'register'])->name('register.submit');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

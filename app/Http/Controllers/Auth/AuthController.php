@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -19,17 +17,6 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         return view('pages.auth.login');
-    }
-
-    /**
-     * Display the registration page.
-     *
-     * Responsibilities:
-     * - Render the user registration form view
-     */
-    public function showRegisterForm()
-    {
-        return view('pages.auth.register');
     }
 
     /**
@@ -72,43 +59,6 @@ class AuthController extends Controller
         if ($user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
-
-        return redirect()->route('home');
-    }
-
-    /**
-     * Handle a user registration request.
-     *
-     * Responsibilities:
-     * - Validate registration input data
-     * - Create a new user account
-     * - Securely hash the user password
-     * - Assign the default "user" role
-     * - Automatically authenticate the new user
-     * - Redirect the user to the homepage
-     */
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:8', 'confirmed'],
-        ]);
-
-        /**
-         * Create a new user with the default role.
-         */
-        $user = User::create([
-            'name'     => $validated['name'],
-            'email'    => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role'     => 'user',
-        ]);
-
-        /**
-         * Automatically log in the newly registered user.
-         */
-        Auth::login($user);
 
         return redirect()->route('home');
     }

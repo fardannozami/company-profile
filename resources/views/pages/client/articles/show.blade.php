@@ -99,7 +99,7 @@
 
                 <div class="space-y-6 text-lg leading-8 text-app-text [&_a]:font-medium [&_a]:text-brand-accent [&_a]:underline">
                     @if ($containsHtml)
-                        {!! $article->content !!}
+                        {!! \App\Support\HtmlSanitizer::clean($article->content) !!}
                     @else
                         @foreach ($paragraphs as $paragraph)
                             <p>{!! nl2br(e(trim($paragraph))) !!}</p>

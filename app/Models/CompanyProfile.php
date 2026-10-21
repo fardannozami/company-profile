@@ -39,7 +39,6 @@ class CompanyProfile extends Model
         'hero_description',
         'hero_cta_primary',
         'hero_cta_secondary',
-        'hero_availability',
         'vision_eyebrow',
         'strength_1',
         'strength_2',

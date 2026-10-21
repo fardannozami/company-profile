@@ -75,7 +75,6 @@ class CompanyProfileController extends Controller
             'hero_description' => 'nullable|string|max:1000',
             'hero_cta_primary' => 'nullable|string|max:255',
             'hero_cta_secondary' => 'nullable|string|max:255',
-            'hero_availability' => 'nullable|string|max:255',
             'vision_eyebrow' => 'nullable|string|max:255',
             'strength_1'   => 'nullable|string|max:255',
             'strength_2'   => 'nullable|string|max:255',

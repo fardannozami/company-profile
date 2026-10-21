@@ -79,13 +79,6 @@
                         :value="$companyProfile?->hero_cta_secondary"
                     />
                 </div>
-
-                <x-common.form.input
-                    label="Hero Availability"
-                    name="hero_availability"
-                    placeholder="Available for new projects"
-                    :value="$companyProfile?->hero_availability"
-                />
             </div>
         </fieldset>
 

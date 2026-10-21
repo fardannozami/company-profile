@@ -79,15 +79,6 @@
                 </figcaption>
             </figure>
 
-            {{-- availability chip --}}
-            <div class="absolute -bottom-5 left-1/2 flex -translate-x-1/2 items-center gap-2.5 whitespace-nowrap rounded-full border border-app-border bg-app-surface px-4 py-2.5 shadow-xl">
-                <span class="relative flex h-2.5 w-2.5">
-                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400/70"></span>
-                    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-500"></span>
-                </span>
-                <span class="text-xs font-medium text-app-heading">{{ $companyProfile->hero_availability ?? 'Terbuka untuk kolaborasi' }}</span>
-            </div>
-
             @if ($trustedLogos->isNotEmpty())
                 <div class="mt-10 flex items-center justify-center gap-6">
                     @foreach ($trustedLogos as $client)

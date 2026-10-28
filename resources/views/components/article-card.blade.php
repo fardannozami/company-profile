@@ -4,12 +4,18 @@
 <a href="{{ route('articles.show', $article->slug) }}"
    class="group surface surface-hover gold-topline flex flex-col overflow-hidden rounded-2xl">
 
-    @if ($article->thumbnail)
-        <div class="aspect-[16/9] overflow-hidden">
+    <div class="aspect-[16/9] overflow-hidden bg-app-surface-2">
+        @if ($article->thumbnail)
             <img src="{{ asset('storage/'.$article->thumbnail) }}" alt="{{ $article->title }}"
                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
-        </div>
-    @endif
+        @else
+            <div class="flex h-full items-center justify-center text-app-muted" aria-hidden="true">
+                <svg class="h-10 w-10 opacity-50" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.5-4.5a2 2 0 012.8 0L16 16m-2-2l1.5-1.5a2 2 0 012.8 0L20 14M4 6h16v12H4z"/>
+                </svg>
+            </div>
+        @endif
+    </div>
 
     <div class="flex flex-1 flex-col p-6">
         <div class="mb-2 flex items-center gap-2 text-xs text-app-muted">

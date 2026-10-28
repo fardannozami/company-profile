@@ -16,6 +16,7 @@
     @if ($companyProfile->show_products ?? true)
         @include('pages.client.home.partials.products')
     @endif
+    @include('pages.client.home.partials.articles')
     @if ($companyProfile->show_clients ?? true)
         @include('pages.client.home.partials.clients')
     @endif

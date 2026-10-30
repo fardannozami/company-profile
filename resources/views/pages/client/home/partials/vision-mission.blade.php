@@ -105,9 +105,9 @@
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 -translate-y-2 blur-sm"
                          class="min-h-[200px] lg:min-h-[220px]">
-                        <p class="mt-6 max-w-4xl font-display text-xl leading-relaxed text-white/90 sm:text-2xl">
-                            {{ filled($companyProfile->vision) ? $companyProfile->vision : 'Menjadi gerakan kader muda yang berkemajuan dan mencerahkan.' }}
-                        </p>
+                        <div class="richtext mt-6 max-w-4xl font-display text-xl leading-relaxed text-white/90 sm:text-2xl">
+                            {!! \App\Support\HtmlSanitizer::clean(filled($companyProfile->vision) ? $companyProfile->vision : 'Menjadi gerakan kader muda yang berkemajuan dan mencerahkan.') !!}
+                        </div>
                     </div>
                     <div role="tabpanel" id="mission-panel" aria-labelledby="tab-mission"
                          x-show="tab === 'misi'"
@@ -118,9 +118,9 @@
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 -translate-y-2 blur-sm"
                          class="min-h-[200px] lg:min-h-[220px]">
-                        <p class="mt-6 max-w-4xl font-display text-xl leading-relaxed text-white/90 sm:text-2xl">
-                            {{ filled($companyProfile->mission) ? $companyProfile->mission : 'Menguatkan kader, menghidupkan dakwah, dan memberi manfaat nyata bagi umat.' }}
-                        </p>
+                        <div class="richtext mt-6 max-w-4xl font-display text-xl leading-relaxed text-white/90 sm:text-2xl">
+                            {!! \App\Support\HtmlSanitizer::clean(filled($companyProfile->mission) ? $companyProfile->mission : 'Menguatkan kader, menghidupkan dakwah, dan memberi manfaat nyata bagi umat.') !!}
+                        </div>
                     </div>
                 </div>
             </div>

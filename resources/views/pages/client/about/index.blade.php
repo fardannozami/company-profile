@@ -165,15 +165,15 @@
 
             <div class="relative">
                 <span class="eyebrow justify-center">Visi &amp; Misi</span>
-                <p class="mx-auto mt-6 max-w-3xl font-display text-2xl font-medium leading-snug text-[#f4f1e8] sm:text-3xl">
-                    &ldquo;{{ $companyProfile->vision
-                        ?? 'To be a trusted digital partner that helps businesses grow through purposeful, lasting technology.' }}&rdquo;
-                </p>
+                <div class="richtext mx-auto mt-6 max-w-3xl font-display text-2xl font-medium leading-snug text-[#f4f1e8] sm:text-3xl">
+                    &ldquo;{!! \App\Support\HtmlSanitizer::clean($companyProfile->vision
+                        ?? 'To be a trusted digital partner that helps businesses grow through purposeful, lasting technology.') !!}&rdquo;
+                </div>
                 <div class="mx-auto my-8 h-px w-24 bg-gold/60"></div>
-                <p class="mx-auto max-w-2xl text-base leading-relaxed text-white/75">
-                    {{ $companyProfile->mission
-                        ?? 'To design and build digital products that solve real problems and deliver meaningful, long-term value.' }}
-                </p>
+                <div class="richtext mx-auto max-w-2xl text-base leading-relaxed text-white/75">
+                    {!! \App\Support\HtmlSanitizer::clean($companyProfile->mission
+                        ?? 'To design and build digital products that solve real problems and deliver meaningful, long-term value.') !!}
+                </div>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomepageSettingController extends Controller
 {
@@ -79,6 +80,7 @@ class HomepageSettingController extends Controller
     {
         $validated = $request->validate([
             'hero_badge'           => 'nullable|string|max:255',
+            'hero_image'           => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'hero_title'           => 'nullable|string|max:255',
             'hero_title_highlight' => 'nullable|string|max:255',
             'hero_description'     => 'nullable|string|max:1000',
@@ -110,11 +112,27 @@ class HomepageSettingController extends Controller
         ]);
 
         /**
+         * Handle hero image upload.
+         * If a new image is uploaded:
+         * - Remove the existing hero image file from storage
+         * - Store the new image in public storage
+         */
+        if ($request->hasFile('hero_image')) {
+            $companyProfile = CompanyProfile::first();
+            if ($companyProfile?->hero_image) {
+                Storage::disk('public')->delete($companyProfile->hero_image);
+            }
+            $validated['hero_image'] = $request->file('hero_image')->store('company', 'public');
+        } else {
+            unset($validated['hero_image']);
+        }
+
+        /**
          * Allowlist: persist homepage columns only.
          * Non-homepage columns (company_name, about, ...) are never touched here.
          */
         $homepageOnly = collect($validated)
-            ->only(array_merge(self::FIELDS, self::TOGGLES))
+            ->only(array_merge(self::FIELDS, self::TOGGLES, ['hero_image']))
             ->toArray();
 
         /**

@@ -1,7 +1,7 @@
 {{-- Landing section: homepage hero — editorial serif, bingkai lengkung emas, motif bintang halus. --}}
 @php
-    // Use the newest gallery image as the hero visual, falling back to the static asset.
-    $heroImage = optional($galleries->first())->image;
+    // Prefer an explicitly uploaded hero photo, then fall back to the newest gallery image, then the static asset.
+    $heroImage = $companyProfile->hero_image ?? optional($galleries->first())->image;
     $heroSrc = $heroImage ? asset('storage/'.$heroImage) : asset('images/hero.jpg');
 
     // Only clients with a logo make sense in this compact trust strip.

@@ -34,6 +34,7 @@ class CompanyProfile extends Model
         'fax',
         'email',
         'hero_badge',
+        'hero_image',
         'hero_title',
         'hero_title_highlight',
         'hero_description',

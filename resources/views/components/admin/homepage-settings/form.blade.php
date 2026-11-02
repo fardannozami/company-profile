@@ -6,6 +6,7 @@
 <form
     method="POST"
     action="{{ route('admin.homepage-settings.update') }}"
+    enctype="multipart/form-data"
 >
     @csrf
     @method('PUT')
@@ -33,6 +34,12 @@
                         <p class="mt-1 text-xs text-danger">{{ $message }}</p>
                     @enderror
                 </div>
+
+                <x-common.form.image-upload
+                    label="Hero Foto"
+                    name="hero_image"
+                    :current="$companyProfile?->hero_image"
+                />
 
                 <x-common.form.input
                     label="Hero Badge"

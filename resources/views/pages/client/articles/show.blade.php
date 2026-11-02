@@ -16,7 +16,7 @@
         @php $imgVer = @filemtime($imgPath) ?: time(); @endphp
         <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}?v={{ $imgVer }}">
         <meta property="og:image:secure_url" content="{{ asset('storage/' . $article->thumbnail) }}?v={{ $imgVer }}">
-        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:type" content="{{ $imgSize['mime'] ?? 'image/jpeg' }}">
         @if ($imgSize)
             <meta property="og:image:width" content="{{ $imgSize[0] }}">
             <meta property="og:image:height" content="{{ $imgSize[1] }}">

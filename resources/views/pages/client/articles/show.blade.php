@@ -13,8 +13,9 @@
             $imgPath = storage_path('app/public/' . $article->thumbnail);
             $imgSize = @getimagesize($imgPath);
         @endphp
-        <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}">
-        <meta property="og:image:secure_url" content="{{ asset('storage/' . $article->thumbnail) }}">
+        @php $imgVer = @filemtime($imgPath) ?: time(); @endphp
+        <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}?v={{ $imgVer }}">
+        <meta property="og:image:secure_url" content="{{ asset('storage/' . $article->thumbnail) }}?v={{ $imgVer }}">
         <meta property="og:image:type" content="image/png">
         @if ($imgSize)
             <meta property="og:image:width" content="{{ $imgSize[0] }}">

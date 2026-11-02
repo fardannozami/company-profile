@@ -34,6 +34,8 @@ class HomepageSettingController extends Controller
         'contact_eyebrow',
         'contact_title',
         'contact_subtitle',
+        'contact_cta_primary',
+        'contact_cta_secondary',
         'location_eyebrow',
         'location_title',
     ];
@@ -100,6 +102,8 @@ class HomepageSettingController extends Controller
             'contact_eyebrow'      => 'nullable|string|max:255',
             'contact_title'        => 'nullable|string|max:255',
             'contact_subtitle'     => 'nullable|string|max:255',
+            'contact_cta_primary'  => 'nullable|string|max:255',
+            'contact_cta_secondary' => 'nullable|string|max:255',
             'location_eyebrow'     => 'nullable|string|max:255',
             'location_title'       => 'nullable|string|max:255',
             'show_hero'            => 'nullable|boolean',

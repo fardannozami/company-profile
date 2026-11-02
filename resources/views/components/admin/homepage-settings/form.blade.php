@@ -311,6 +311,22 @@
                         placeholder="Tell us what you're building. We'll get back to you within one business day."
                         :value="$companyProfile?->contact_subtitle"
                     />
+
+                    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                        <x-common.form.input
+                            label="Tombol Kirim Pesan"
+                            name="contact_cta_primary"
+                            placeholder="Kirim pesan"
+                            :value="$companyProfile?->contact_cta_primary"
+                        />
+
+                        <x-common.form.input
+                            label="Tombol Chat WhatsApp"
+                            name="contact_cta_secondary"
+                            placeholder="Chat WhatsApp"
+                            :value="$companyProfile?->contact_cta_secondary"
+                        />
+                    </div>
                 </div>
             </div>
         </fieldset>

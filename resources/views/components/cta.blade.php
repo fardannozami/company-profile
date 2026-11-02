@@ -12,9 +12,9 @@
         <div x-data x-reveal
              class="relative isolate overflow-hidden rounded-[2rem] bg-[#141834] px-6 py-16 text-center md:px-12 md:py-20">
 
-            <div class="absolute inset-0 pattern-star opacity-60"></div>
-            <div aria-hidden="true" class="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#c6a15b] to-transparent"></div>
-            <div class="absolute left-1/2 top-0 -z-10 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[#4f46e5]/25 blur-3xl"></div>
+            <div class="absolute inset-0 pattern-star opacity-60 pointer-events-none"></div>
+            <div aria-hidden="true" class="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[#c6a15b] to-transparent pointer-events-none"></div>
+            <div class="absolute left-1/2 top-0 -z-10 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-[#4f46e5]/25 blur-3xl pointer-events-none"></div>
 
             @if ($eyebrow)
                 <span class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#c6a15b]">

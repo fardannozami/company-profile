@@ -9,9 +9,9 @@
        :title="$companyProfile->contact_title ?? 'Ingin berkolaborasi dengan kami?'"
        :subtitle="$companyProfile->contact_subtitle ?? 'Sampaikan pesan Anda — insyaallah kami balas dalam satu hari kerja.'">
     <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-        <a href="{{ route('contact') }}" class="btn-primary btn-lg">Kirim pesan</a>
+        <a href="{{ route('contact') }}" class="btn-primary btn-lg">{{ $companyProfile->contact_cta_primary ?? 'Kirim pesan' }}</a>
         @if ($waLink)
-            <a href="{{ $waLink }}" target="_blank" rel="noopener noreferrer" class="btn-outline btn-lg border-white/25 text-white hover:border-[#c6a15b] hover:bg-[#c6a15b]/10">Chat WhatsApp</a>
+            <a href="{{ $waLink }}" target="_blank" rel="noopener noreferrer" class="btn-outline btn-lg border-white/25 text-white hover:border-[#c6a15b] hover:bg-[#c6a15b]/10">{{ $companyProfile->contact_cta_secondary ?? 'Chat WhatsApp' }}</a>
         @endif
     </div>
 

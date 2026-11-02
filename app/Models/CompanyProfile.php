@@ -57,6 +57,8 @@ class CompanyProfile extends Model
         'contact_eyebrow',
         'contact_title',
         'contact_subtitle',
+        'contact_cta_primary',
+        'contact_cta_secondary',
         'location_eyebrow',
         'location_title',
         'show_hero',

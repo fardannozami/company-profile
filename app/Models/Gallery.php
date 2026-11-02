@@ -49,7 +49,7 @@ class Gallery extends Model
      * - Hide inactive gallery items from public-facing pages
      *
      * Usage example:
-     * Gallery::active()->orderBy('order')->get();
+     * Gallery::active()->orderByDesc('updated_at')->get();
      */
     public function scopeActive($query)
     {

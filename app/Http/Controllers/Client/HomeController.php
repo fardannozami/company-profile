@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::where('is_active', true)->orderBy('order')->limit(4)->get();
+        $galleries = Gallery::where('is_active', true)->orderByDesc('updated_at')->limit(4)->get();
         $products = Product::where('is_active', true)->orderBy('order')->limit(6)->get();
         $articles = Article::published()->latest('published_at')->limit(3)->get();
         $clients = Client::where('is_active', true)->orderBy('order')->limit(8)->get();

@@ -20,7 +20,7 @@ class GalleryController extends Controller
     public function index()
     {
         return view('pages.admin.gallery.index', [
-            'galleries' => Gallery::orderBy('order')->paginate(12),
+            'galleries' => Gallery::orderByDesc('updated_at')->paginate(12),
         ]);
     }
 

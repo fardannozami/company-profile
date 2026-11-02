@@ -18,7 +18,7 @@ class CompanyProfileController extends Controller
     {
         // Use a real gallery photo for the hero instead of the static placeholder.
         $aboutImage = Gallery::where('is_active', true)
-            ->orderBy('order')
+            ->orderByDesc('updated_at')
             ->value('image');
 
         return view('pages.client.about.index', [

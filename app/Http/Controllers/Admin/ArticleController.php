@@ -73,9 +73,10 @@ class ArticleController extends Controller
          * If a thumbnail is provided, store it in public storage.
          */
         if ($request->hasFile('thumbnail')) {
-            $validated['thumbnail'] = $request
-                ->file('thumbnail')
-                ->store('articles', 'public');
+            $validated['thumbnail'] = $this->compressImage(
+                $request->file('thumbnail'),
+                'articles'
+            );
         }
 
         /**
@@ -146,9 +147,10 @@ class ArticleController extends Controller
                 Storage::disk('public')->delete($article->thumbnail);
             }
 
-            $validated['thumbnail'] = $request
-                ->file('thumbnail')
-                ->store('articles', 'public');
+            $validated['thumbnail'] = $this->compressImage(
+                $request->file('thumbnail'),
+                'articles'
+            );
         }
 
         /**
@@ -218,5 +220,73 @@ class ArticleController extends Controller
         }
 
         return back()->with('success', "Deleted {$count} article(s).");
+    }
+
+    /**
+     * Compress and resize an uploaded image to a web-friendly size.
+     * Returns the stored path (relative to the public disk).
+     */
+    private function compressImage($file, string $folder): string
+    {
+        $maxWidth = 1200;
+        $quality = 80;
+
+        $srcPath = $file->getRealPath();
+        $info = @getimagesize($srcPath);
+
+        if ($info === false) {
+            return $file->store($folder, 'public');
+        }
+
+        [$width, $height, $type] = $info;
+
+        switch ($type) {
+            case IMAGETYPE_JPEG:
+                $src = imagecreatefromjpeg($srcPath);
+                break;
+            case IMAGETYPE_PNG:
+                $src = imagecreatefrompng($srcPath);
+                break;
+            case IMAGETYPE_WEBP:
+                $src = imagecreatefromwebp($srcPath);
+                break;
+            default:
+                return $file->store($folder, 'public');
+        }
+
+        if ($src === false) {
+            return $file->store($folder, 'public');
+        }
+
+        $ratio = $width > $maxWidth ? ($maxWidth / $width) : 1;
+        $newW = (int) round($width * $ratio);
+        $newH = (int) round($height * $ratio);
+
+        $dst = imagecreatetruecolor($newW, $newH);
+
+        // Preserve transparency for PNG
+        if ($type === IMAGETYPE_PNG) {
+            imagealphablending($dst, false);
+            imagesavealpha($dst, true);
+        }
+
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newW, $newH, $width, $height);
+
+        $filename = uniqid() . '.jpg';
+        $relative = $folder . '/' . $filename;
+        $absolute = Storage::disk('public')->path($relative);
+
+        // Ensure directory exists
+        $dir = dirname($absolute);
+        if (!is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        imagejpeg($dst, $absolute, $quality);
+
+        imagedestroy($src);
+        imagedestroy($dst);
+
+        return $relative;
     }
 }

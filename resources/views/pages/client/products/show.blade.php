@@ -88,13 +88,11 @@
                 </p>
 
                 {{-- ABOUT --}}
-                @if (count($paragraphs))
+                @if (filled($body))
                     <div class="mt-10 border-t border-app-border pt-8">
                         <h2 class="text-lg font-semibold text-app-heading">About this product</h2>
-                        <div class="mt-4 space-y-4 leading-relaxed text-app-text">
-                            @foreach ($paragraphs as $paragraph)
-                                <p>{!! nl2br(e(trim($paragraph))) !!}</p>
-                            @endforeach
+                        <div class="mt-4 leading-relaxed text-app-text trix-content">
+                            {!! $body !!}
                         </div>
                     </div>
                 @endif

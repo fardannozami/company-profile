@@ -26,6 +26,7 @@ class Product extends Model
         'delivery_type',
         'download_path',
         'download_url',
+        'link_url',
         'is_active',
         'order',
     ];

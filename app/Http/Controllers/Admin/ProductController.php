@@ -61,6 +61,7 @@ class ProductController extends Controller
             'delivery_type' => 'required|in:file,link',
             'file'          => 'nullable|file|mimes:zip,rar',
             'download_url'  => 'nullable|url',
+            'link_url'     => 'nullable|url',
         ]);
 
         /**
@@ -162,6 +163,7 @@ class ProductController extends Controller
             'delivery_type' => 'required|in:file,link',
             'file'          => 'nullable|file|mimes:zip,rar',
             'download_url'  => 'nullable|url',
+            'link_url'     => 'nullable|url',
         ]);
 
         /**
@@ -234,6 +236,7 @@ class ProductController extends Controller
                 'price',
                 'delivery_type',
                 'is_active',
+                'link_url',
             ]));
 
             $product->save();

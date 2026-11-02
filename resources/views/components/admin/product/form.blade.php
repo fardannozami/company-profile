@@ -46,6 +46,13 @@
             :value="$product?->content"
         />
 
+        <x-common.form.input
+            label="Link Tombol (opsional)"
+            name="link_url"
+            placeholder="https://..."
+            :value="$product?->link_url"
+        />
+
         {{-- IMAGE --}}
         <div
             x-data="{ preview: '{{ $product?->image ? asset('storage/'.$product->image) : '' }}' }"

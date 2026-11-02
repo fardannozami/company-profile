@@ -57,25 +57,26 @@
                 @endif
 
                 {{-- ACTIONS — admin accounts manage the store, they don't shop in it --}}
-                @if (auth()->user()?->isAdmin())
-                    <div class="mt-8 rounded-xl border border-app-border bg-app-surface-2 px-4 py-3.5 text-center text-sm text-app-muted">
-                        Admin accounts can't purchase products.
-                    </div>
-                @else
-                    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-                        <form method="POST" action="{{ route('cart.store') }}" class="w-full">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn-outline w-full py-3.5">Add to Cart</button>
-                        </form>
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+                    @php
+                        $waNumber = preg_replace('/\D/', '', $companyProfile->whatsapp ?? '');
+                        $waText = urlencode('Halo, saya tertarik dengan produk: ' . $product->name);
+                    @endphp
+                    @if (filled($waNumber))
+                        <a href="https://wa.me/{{ $waNumber }}?text={{ $waText }}"
+                           target="_blank" rel="noopener noreferrer"
+                           class="btn-primary w-full py-3.5 text-center">
+                            Chat WhatsApp
+                        </a>
+                    @endif
 
-                        <form method="POST" action="{{ route('cart.buyNow') }}" class="w-full">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <button type="submit" class="btn-primary w-full py-3.5">Buy Now</button>
-                        </form>
-                    </div>
-                @endif
+                    @if (filled($product->link_url))
+                        <a href="{{ $product->link_url }}" target="_blank" rel="noopener noreferrer"
+                           class="btn-outline w-full py-3.5 text-center">
+                            Buka Link
+                        </a>
+                    @endif
+                </div>
 
                 {{-- subtle trust line (no rigid box) --}}
                 <p class="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-app-muted">

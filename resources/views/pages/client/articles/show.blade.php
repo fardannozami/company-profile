@@ -3,6 +3,18 @@
 
 @section('title', $article->title)
 
+@push('meta')
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ $article->title }}">
+    <meta property="og:description" content="{{ $article->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($article->content), 160) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if ($article->thumbnail)
+        <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}">
+        <meta property="og:image:secure_url" content="{{ asset('storage/' . $article->thumbnail) }}">
+    @endif
+    <meta name="twitter:card" content="summary_large_image">
+@endpush
+
 @section('content')
 
 {{-- Estimate reading time, derive the author's initial, and split the body into paragraphs. --}}

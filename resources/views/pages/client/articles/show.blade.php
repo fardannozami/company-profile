@@ -9,8 +9,17 @@
     <meta property="og:description" content="{{ $article->excerpt ?? \Illuminate\Support\Str::limit(strip_tags($article->content), 160) }}">
     <meta property="og:url" content="{{ url()->current() }}">
     @if ($article->thumbnail)
+        @php
+            $imgPath = storage_path('app/public/' . $article->thumbnail);
+            $imgSize = @getimagesize($imgPath);
+        @endphp
         <meta property="og:image" content="{{ asset('storage/' . $article->thumbnail) }}">
         <meta property="og:image:secure_url" content="{{ asset('storage/' . $article->thumbnail) }}">
+        <meta property="og:image:type" content="image/png">
+        @if ($imgSize)
+            <meta property="og:image:width" content="{{ $imgSize[0] }}">
+            <meta property="og:image:height" content="{{ $imgSize[1] }}">
+        @endif
     @endif
     <meta name="twitter:card" content="summary_large_image">
 @endpush

@@ -29,10 +29,23 @@
         <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
 
             {{-- IMAGE — capped height so tall portrait photos don't blow out the page; object-contain keeps the whole image visible either way, no crop --}}
-            <div class="lg:sticky lg:top-24 lg:self-start">
-                <div class="flex h-[420px] items-center justify-center overflow-hidden rounded-2xl border border-app-border bg-app-surface-2 lg:h-[480px]">
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
-                         class="h-full w-full object-contain">
+            @php
+    $productImages = collect([$product->image])->merge($product->images ?? [])->filter()->values();
+@endphp
+            <div class="lg:sticky lg:top-24 lg:self-start" x-data="{ i: 0, n: {{ $productImages->count() }} }">
+                <div class="relative flex h-[420px] items-center justify-center overflow-hidden rounded-2xl border border-app-border bg-app-surface-2 lg:h-[480px]">
+                    @foreach ($productImages as $idx => $img)
+                        <img src="{{ asset('storage/' . $img) }}" alt="{{ $product->name }}"
+                             class="absolute inset-0 h-full w-full object-contain transition-opacity duration-300"
+                             :class="i === {{ $idx }} ? 'opacity-100' : 'opacity-0'">
+                    @endforeach
+
+                    @if ($productImages->count() > 1)
+                        <button type="button" @click="i = (i - 1 + n) % n"
+                                style="left:8px" class="absolute top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/70 px-3 py-2 text-lg text-white hover:bg-black/90">‹</button>
+                        <button type="button" @click="i = (i + 1) % n"
+                                style="right:8px" class="absolute top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/70 px-3 py-2 text-lg text-white hover:bg-black/90">›</button>
+                    @endif
                 </div>
             </div>
 

@@ -83,6 +83,27 @@
             @enderror
         </div>
 
+        {{-- GALLERY IMAGES (CAROUSEL) --}}
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-app-heading">
+                Gambar Tambahan (Carousel)
+            </label>
+            <input
+                type="file"
+                name="images[]"
+                multiple
+                accept="image/*"
+                class="form-input"
+            >
+            @if ($product?->images)
+                <div class="mt-2 flex flex-wrap gap-2">
+                    @foreach ($product->images as $img)
+                        <img src="{{ asset('storage/'.$img) }}" class="h-16 w-16 rounded object-cover border border-app-border" alt="">
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
         {{-- PRICE --}}
         <x-common.form.input
             label="Price"

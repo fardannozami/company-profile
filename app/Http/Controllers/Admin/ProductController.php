@@ -101,6 +101,17 @@ class ProductController extends Controller
         }
 
         /**
+         * Handle additional product gallery images (carousel).
+         */
+        if ($request->hasFile('images')) {
+            $paths = [];
+            foreach ($request->file('images') as $file) {
+                $paths[] = $file->store('products', 'public');
+            }
+            $validated['images'] = $paths;
+        }
+
+        /**
          * Handle delivery configuration.
          *
          * - File delivery:
@@ -198,6 +209,17 @@ class ProductController extends Controller
                 }
                 $product->image = $request->file('image')
                     ->store('products', 'public');
+            }
+
+            /**
+             * Append new gallery images for the carousel.
+             */
+            if ($request->hasFile('images')) {
+                $paths = $product->images ?? [];
+                foreach ($request->file('images') as $file) {
+                    $paths[] = $file->store('products', 'public');
+                }
+                $product->images = $paths;
             }
 
             /**

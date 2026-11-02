@@ -22,6 +22,7 @@ class Product extends Model
         'description',
         'content',
         'image',
+        'images',
         'price',
         'delivery_type',
         'download_path',
@@ -42,6 +43,7 @@ class Product extends Model
         'is_active' => 'boolean',
         'price'     => 'decimal:2',
         'order'     => 'integer',
+        'images'    => 'array',
     ];
 
     /**

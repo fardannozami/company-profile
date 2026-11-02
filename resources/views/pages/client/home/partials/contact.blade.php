@@ -21,7 +21,7 @@
                 <a href="mailto:{{ $companyProfile->email }}" class="transition hover:text-white">{{ $companyProfile->email }}</a>
             @endif
             @if (filled($companyProfile->phone))
-                <a href="tel:{{ $companyProfile->phone }}" class="transition hover:text-white">{{ $companyProfile->phone }}</a>
+                <a href="https://wa.me/{{ preg_replace('/\D/', '', $companyProfile->whatsapp ?: $companyProfile->phone) }}" target="_blank" rel="noopener noreferrer" class="transition hover:text-white">{{ $companyProfile->phone }}</a>
             @endif
         </div>
     @endif
